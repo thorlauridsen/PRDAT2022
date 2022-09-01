@@ -118,10 +118,13 @@ let rec fmt =
     | CstI i -> string i
     | Var s -> s
     | Add (a1, a2) ->
-        "(" + fmt a1 + "+" + fmt a2 + ")"
+        "(" + fmt a1 + " + " + fmt a2 + ")"
     | Mul (a1, a2) ->
-        "(" + fmt a1 + "*" + fmt a2 + ")"
+        "(" + fmt a1 + " * " + fmt a2 + ")"
     | Sub (a1, a2) ->
-        "(" + fmt a1 + "-" + fmt a2 + ")"
+        "(" + fmt a1 + " - " + fmt a2 + ")"
 
 printfn "(x - 34) = %A" (fmt (Sub(Var "x", CstI 34)))
+printfn "%A = %A" aex1 (fmt aex1)
+printfn "%A = %A" aex2 (fmt aex2)
+printfn "%A = %A" aex3 (fmt aex3)
