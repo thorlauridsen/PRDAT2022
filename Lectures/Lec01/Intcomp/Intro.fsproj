@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="Intcomp1.fs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <PackageReference Update="FSharp.Core" Version="6.0.3" />
+    </ItemGroup>
+</Project>
