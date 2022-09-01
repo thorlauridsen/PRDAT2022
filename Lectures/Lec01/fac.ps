@@ -1,0 +1,20 @@
+% On MacOSX 10.9 - just type open fac.ps (GhostScript not by default included in OSX)
+/str 20 string def
+/prTop { str cvs show } def
+/Times-Roman findfont 25 scalefont setfont
+100 500 moveto
+(Calculate 4 5 add 8 mul = ) show
+4 5 add 8 mul prTop
+100 400 moveto
+(Calculate fac n for n in [1..12] \n) show
+/fac { dup 0 eq
+       { pop 1 }
+       { dup 1 sub fac mul }
+       ifelse } def
+0 1 12 {dup 100 exch 25 mul neg 380 add moveto
+        (fac ) show
+        dup prTop
+        ( = ) show
+        fac
+        prTop} for
+showpage

@@ -1,0 +1,5 @@
+#!/bin/bash
+BASE=$HOME/bin/fsharp 
+FSYACC=$BASE/fsyacc.exe
+FILE_NAME=${1%%.*}
+mono $FSYACC --module $FILE_NAME $*
