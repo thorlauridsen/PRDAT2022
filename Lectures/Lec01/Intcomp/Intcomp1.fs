@@ -10,7 +10,7 @@ module Intcomp1
 type expr = 
   | CstI of int
   | Var of string
-  | Let of string * expr * expr
+  | Let of (string * expr) list * expr
   | Prim of string * expr * expr;;
 
 (* Some closed expressions: *)
@@ -208,16 +208,58 @@ let rec minus (xs, ys) =
 
 (* Find all variables that occur free in expression e *)
 
+//BEFORE:
+//let rec freevars e : string list =
+//    match e with
+//    | CstI i -> []
+//    | Var x  -> [x]
+//    | Let(x, erhs, ebody) -> 
+//          union (freevars erhs, minus (freevars ebody, [x]))
+//    | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
+
+//REVISED:
 let rec freevars e : string list =
+    
     match e with
     | CstI i -> []
     | Var x  -> [x]
-    | Let(x, erhs, ebody) -> 
+    | Let(lst, ebody) -> 
           union (freevars erhs, minus (freevars ebody, [x]))
+
     | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
 
-(* Alternative definition of closed *)
+let rec freevars e : string list =
 
+    let rec getLeft lst =
+        match lst with
+        | [] -> []
+        | (x, erhs) :: tail -> x :: freevars erhs :: getLeft tail
+
+    match e with
+    | CstI i -> []
+    | Var x  -> [x]
+    | Let(lst, ebody) -> 
+            let left = freevars erhs
+            List.fold(fun acc (x, erhs) -> 
+                union (acc, minus (freevars ebody, [x]))
+            ) left lst
+            //union (freevars erhs, minus (freevars ebody, lst2))
+//            List.fold(fun acc (x, erhs) -> 
+//                    union(union (freevars erhs, minus (freevars ebody, [x])), acc)
+//                ) [] lst
+
+    | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
+
+let closedEx1 = Let([("x1", CstI 10); ("y1", CstI 5)], Prim("+", Var "x2", Var "y2")) 
+let freeEx1 = Let([("x", Var "z"); ("y", CstI 5)], Prim("+", Var "x", Var "y")) 
+
+freevars closedEx1
+freevars freeEx1
+
+let e1 = Let("z", CstI 17, Prim("+", Var "z", Var "z"));;
+
+
+(* Alternative definition of closed *)
 let closed2 e = (freevars e = []);;
 let _ = List.map closed2 [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
 
