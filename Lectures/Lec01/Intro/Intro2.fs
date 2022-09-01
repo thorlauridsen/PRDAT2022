@@ -46,23 +46,25 @@ let rec eval e (env : (string * int) list) : int =
         let left = eval e1 env
         let right = eval e2 env
         if left > right then left else right
+
     | Prim("min", e1, e2) ->
         let left = eval e1 env
         let right = eval e2 env
         if left < right then left else right
+
     | Prim("==", e1, e2) ->
         let left = eval e1 env
         let right = eval e2 env
         if left = right then 1 else 0
-    | Prim _            -> failwith "unknown primitive";;
 
+    | Prim _            -> failwith "unknown primitive";;
 
 let e1v  = eval e1 env;;
 let e2v1 = eval e2 env;;
 let e2v2 = eval e2 [("a", 314)];;
 let e3v  = eval e3 env;;
 
-(* 1.2 *)
+(* 1.1.2 *)
 let example0 = eval (Prim("max", (CstI 7), (Prim("*", (CstI 2), (CstI 7))))) env;;
 printfn "eval (Prim(\"max\", (CstI 7), (Prim(\"*\", (CstI 2), (CstI 7))))) = %A" (example0)
 let example1 = eval (Prim("max", CstI 5, CstI 10)) env // Returns 10
@@ -74,7 +76,7 @@ printfn "eval (Prim(\"==\", CstI 5, CstI 10)) = %A" (example3)
 let example4 = eval (Prim("==", CstI 10, CstI 10)) env //Returns 1
 printfn "eval (Prim(\"==\", CstI 10, CstI 10)) = %A" (example4)
 
-(* 1.1.2, 1.1.3 1.1.4*)
+(* 1.1.3, 1.1.4, 1.1.5 *)
 let rec eval2 e (env : (string * int) list) : int =
     match e with
     | CstI i            -> i
@@ -83,24 +85,22 @@ let rec eval2 e (env : (string * int) list) : int =
         let i1 = eval2 e1 env
         let i2 = eval2 e2 env
         match ops with
-        | "+" -> i1+i2
-        | "*" -> i1*i2
-        | "-" -> i1-i2
+        | "+" -> i1 + i2
+        | "*" -> i1 * i2
+        | "-" -> i1 - i2
         | "max" ->  if i1 > i2 then i1 else i2
         | "min" ->  if i1 < i2 then i1 else i2
         | "==" ->  if i1 = i2 then 1 else 0
         | _ -> failwith "unknown primitive"
     | If (e1, e2, e3) -> if eval2 e1 env <> 0 then eval2 e2 env else eval2 e3 env
 
-(*1.2.1*)
-
+(* 1.2.1 *)
 type aexpr =
   | CstI of int
   | Var of string
   | Add of aexpr * aexpr
   | Mul of aexpr * aexpr
   | Sub of aexpr * aexpr
-
 
 (* 1.2.2 *)
 (* v−(w+z) *)
@@ -128,3 +128,40 @@ printfn "(x - 34) = %A" (fmt (Sub(Var "x", CstI 34)))
 printfn "%A = %A" aex1 (fmt aex1)
 printfn "%A = %A" aex2 (fmt aex2)
 printfn "%A = %A" aex3 (fmt aex3)
+
+(* 1.2.4 *)
+let rec simplify (ae: aexpr) : aexpr =
+    match ae with
+    | CstI i -> ae
+    | Var x -> ae
+    | Add(ae1, ae2) -> 
+        match ae1, ae2 with
+        | CstI i, _ -> if i = 0 then ae2 else Add(simplify ae1, simplify ae2) 
+        | _, CstI i -> if i = 0 then ae1 else Add(simplify ae1, simplify ae2)
+        | _, _ -> Add(simplify ae1, simplify ae2)
+
+    | Sub(ae1, ae2) -> 
+        match ae1, ae2 with 
+        | _, CstI i -> if i = 0 then ae1 else Sub(simplify ae1, simplify ae2)
+        | _, _ -> if ae1 = ae2 then CstI 0 else Sub(simplify ae1, simplify ae2)
+
+    | Mul(ae1, ae2) -> 
+        match ae1, ae2 with
+        | CstI i, _ -> if i = 1 then ae2 else if i = 0 then CstI 0 else Mul(simplify ae1, simplify ae2)
+        | _, CstI i -> if i = 1 then ae1 else if i = 0 then CstI 0 else Mul(simplify ae1, simplify ae2)
+        | _, _ -> Mul(simplify ae1, simplify ae2)
+
+let se1 = Add(Var "e", Add(Var "e", CstI 0))
+simplify se1
+
+(* 1.2.5 *)
+let rec aeval (ae : aexpr) (env : (string * int) list) : int = 
+    match ae with
+    | CstI i -> i
+    | Var x -> lookup env x 
+    | Add(ae1, ae2) -> (aeval ae1 env) + (aeval ae2 env)
+    | Sub(ae1, ae2) -> (aeval ae1 env) - (aeval ae2 env)
+    | Mul(ae1, ae2) -> (aeval ae1 env) * (aeval ae2 env)
+
+let ae2 = Add(Var "a", Add(Var "a", CstI 5))
+let aresult2 = aeval ae2 env
