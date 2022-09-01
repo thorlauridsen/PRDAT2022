@@ -60,4 +60,4 @@ let e2v1 = eval e2 env;;
 let e2v2 = eval e2 [("a", 314)];;
 let e3v  = eval e3 env;;
 let e1ii = eval (Prim("max", (CstI 7), (Prim("*", (CstI 2), (CstI 7))))) env;;
-printfn "eval (Prim(max, (CstI 7), (Prim("*", (CstI 2), (CstI 7))))) = %A" (e1ii)
+printfn "eval (Prim(\"max\", (CstI 7), (Prim(\"*\", (CstI 2), (CstI 7))))) = %A" (e1ii)
