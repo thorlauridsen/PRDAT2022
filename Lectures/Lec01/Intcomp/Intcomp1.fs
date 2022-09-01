@@ -78,7 +78,7 @@ let rec mem x vs =
 
 (* Checking whether an expression is closed.  The vs is 
    a list of the bound variables.  *)
-
+(*
 let rec closedin (e : expr) (vs : string list) : bool =
     match e with
     | CstI i -> true
@@ -92,7 +92,7 @@ let rec closedin (e : expr) (vs : string list) : bool =
 
 let closed1 e = closedin e [];;
 let _ = List.map closed1 [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
-
+*)
 (* ---------------------------------------------------------------------- *)
 
 (* Substitution of expressions for variables *)
@@ -113,7 +113,7 @@ let rec remove env x =
     | (y, e)::r -> if x=y then r else (y, e) :: remove r x;;
 
 (* Naive substitution, may capture free variables: *)
-
+(*
 let rec nsubst (e : expr) (env : (string * expr) list) : expr =
     match e with
     | CstI i -> e
@@ -184,7 +184,7 @@ let e8s1a = subst e8 [("z", CstI 100)];;
 
 // Shows renaming of bound variable z (to z3), avoiding capture of free z
 let e9s1a = subst e9 [("y", Var "z")];;
-
+*)
 (* ---------------------------------------------------------------------- *)
 
 (* Free variables *)
@@ -241,7 +241,7 @@ let freeEx1 = Let([("x", Var "z"); ("y", CstI 5)], Prim("+", Var "x", Var "y"))
 freevars closedEx1
 freevars freeEx1
 
-let e1 = Let("z", CstI 17, Prim("+", Var "z", Var "z"));;
+let e1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
 
 
 (* Alternative definition of closed *)
@@ -268,7 +268,7 @@ let rec getindex vs x =
     | y::yr -> if x=y then 0 else 1 + getindex yr x;;
 
 (* Compiling from expr to texpr *)
-
+// let x = 5+5 in x*x
 let rec tcomp (e : expr) (cenv : string list) : texpr =
     match e with
     | CstI i -> TCstI i
