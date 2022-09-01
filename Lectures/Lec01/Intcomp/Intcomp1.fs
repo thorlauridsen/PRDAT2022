@@ -211,6 +211,7 @@ let rec minus (xs, ys) =
 
 (* Find all variables that occur free in expression e *)
 
+(* 2.2 *)
 //BEFORE:
 //let rec freevars e : string list =
 //    match e with
@@ -222,38 +223,19 @@ let rec minus (xs, ys) =
 
 //REVISED:
 let rec freevars e : string list =
-    
-    match e with
-    | CstI i -> []
-    | Var x  -> [x]
-    | Let(lst, ebody) -> 
-          union (freevars erhs, minus (freevars ebody, [x]))
-
-    | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
-
-let rec freevars e : string list =
-
-    let rec getLeft lst =
-        match lst with
-        | [] -> []
-        | (x, erhs) :: tail -> x :: freevars erhs :: getLeft tail
 
     match e with
     | CstI i -> []
     | Var x  -> [x]
     | Let(lst, ebody) -> 
-            let left = freevars erhs
-            List.fold(fun acc (x, erhs) -> 
-                union (acc, minus (freevars ebody, [x]))
-            ) left lst
-            //union (freevars erhs, minus (freevars ebody, lst2))
-//            List.fold(fun acc (x, erhs) -> 
-//                    union(union (freevars erhs, minus (freevars ebody, [x])), acc)
-//                ) [] lst
+            let left = List.fold(fun acc (x, erhs) -> 
+                            [x] @ (freevars erhs) @ acc    
+                        ) [] lst
 
+            minus (left, freevars ebody)
     | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
 
-let closedEx1 = Let([("x1", CstI 10); ("y1", CstI 5)], Prim("+", Var "x2", Var "y2")) 
+let closedEx1 = Let([("x", CstI 10); ("y", CstI 5)], Prim("+", Var "x", Var "y")) 
 let freeEx1 = Let([("x", Var "z"); ("y", CstI 5)], Prim("+", Var "x", Var "y")) 
 
 freevars closedEx1
