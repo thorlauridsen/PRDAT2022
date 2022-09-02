@@ -241,7 +241,7 @@ let freeEx1 = Let([("x", Var "z"); ("y", CstI 5)], Prim("+", Var "x", Var "y"))
 freevars closedEx1
 freevars freeEx1
 
-let e1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
+let ae1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
 
 
 (* Alternative definition of closed *)
@@ -293,9 +293,13 @@ let rec tcomp (e : expr) (cenv : string list) : texpr =
 
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
 
+let testExpr = Let([("x", CstI 5); ("z", CstI 10)], Prim("+", Var "x", Var "z"))
+let testComp = tcomp (temp) ["x"; "z"]
+printfn "TestComp = %A" tempComp
+
 (* Evaluation of target expressions with variable indexes.  The
    run-time environment renv is a list of variable values (ints).  *)
-
+(*
 let rec teval (e : texpr) (renv : int list) : int =
     match e with
     | TCstI i -> i
@@ -420,3 +424,4 @@ let intsToFile (inss : int list) (fname : string) =
     System.IO.File.WriteAllText(fname, text);;
 
 (* -----------------------------------------------------------------  *)
+*)
