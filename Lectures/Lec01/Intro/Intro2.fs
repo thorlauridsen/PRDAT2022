@@ -135,30 +135,24 @@ let rec simplify (ae: aexpr) : aexpr =
     | CstI i    -> ae
     | Var x     -> ae
     | Add(ae1, ae2) -> 
-        match ae1, ae2 with
-        | CstI 0, _ -> simplify ae2
-        | _, CstI 0 -> simplify ae1
-        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
-                    -> Add(ae1, ae2)
-        | _, _      -> simplify (Add(simplify ae1, simplify ae2))
+        match simplify ae1, simplify ae2 with
+        | CstI 0, simpAe2 -> ae2
+        | simpAe1, CstI 0 -> ae1
+        | simpAe1, simpAe2      -> Add(simpAe1, simpAe2)
 
     | Sub(ae1, ae2) -> 
-        match ae1, ae2 with 
-        | _, CstI 0  -> simplify ae1
-        | _, _ when ae1 = ae2   -> CstI 0
-        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
-                                -> Sub(ae1, ae2)
-        | _, _                  -> simplify (Sub(simplify ae1, simplify ae2))
+        match simplify ae1, simplify ae2 with
+        | simpAe1, CstI 0                           -> simpAe1
+        | simpAe1, simpAe2 when simpAe1 = simpAe2   -> CstI 0
+        | simpAe1, simpAe2                          -> Sub(simpAe1, simpAe2)
 
     | Mul(ae1, ae2) -> 
-        match ae1, ae2 with
-        | CstI 1, _ -> simplify ae2
-        | CstI 0, _ -> CstI 0
-        | _, CstI 1 -> simplify ae1
-        | _, CstI 0 -> CstI 0
-        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
-                                -> Mul(ae1, ae2)
-        | _, _                  -> simplify (Mul(simplify ae1, simplify ae2))
+        match simplify ae1, simplify ae2 with
+        | CstI 1, simpAe2   -> simpAe2
+        | CstI 0, _         -> CstI 0
+        | simpAe1, CstI 1   -> simpAe1
+        | _, CstI 0         -> CstI 0
+        | simpAe1, simpAe2  -> Mul(simpAe1, simpAe2)
 
 
 printfn "\nExercise 1.2.4"

@@ -54,16 +54,14 @@ namespace Exercise1_4{
         public override int eval(Dictionary<string, int> env) => _e1.eval(env) + _e2.eval(env);
     
         public override Expr simplify(){
-            if (_e1 is CstI && ((CstI) _e1).x == 0){
-                return _e2.simplify();
-            } else if (_e2 is CstI && ((CstI) _e2).x == 0){
-                return _e1.simplify();
-            } else if ((_e1 is CstI || _e1 is Var) && (_e2 is CstI || _e2 is Var)){
-                return this;
+            Expr simp_e1 = _e1.simplify();
+            Expr simp_e2 = _e2.simplify();
+            if (simp_e1 is CstI && ((CstI) simp_e1).x == 0){
+                return simp_e2;
+            } else if (simp_e2 is CstI && ((CstI) simp_e2).x == 0){
+                return simp_e1;
             } else {
-                _e1 = _e1.simplify();
-                _e2 = _e2.simplify();
-                return simplify();
+                return this;
             }
         }
     }
@@ -79,16 +77,14 @@ namespace Exercise1_4{
         public override int eval(Dictionary<string, int> env) => _e1.eval(env) - _e2.eval(env);
 
         public override Expr simplify(){
-            if (_e2 is CstI && ((CstI) _e2).x == 0){
-                return _e1.simplify();
-            } else if (_e1 is CstI && _e2 is CstI && ((CstI) _e1).x == ((CstI) _e2).x || _e1 is Var && _e2 is Var && ((Var) _e1).v == ((Var) _e2).v){
+            Expr simp_e1 = _e1.simplify();
+            Expr simp_e2 = _e2.simplify();
+            if (simp_e2 is CstI && ((CstI) _e2).x == 0){
+                return simp_e1;
+            } else if (simp_e1 is CstI && simp_e2 is CstI && ((CstI) simp_e1).x == ((CstI) simp_e2).x || simp_e1 is Var && simp_e2 is Var && ((Var) simp_e1).v == ((Var) simp_e2).v){
                 return new CstI(0);
-            } else if ((_e1 is CstI || _e1 is Var) && (_e2 is CstI || _e2 is Var)){
-                return this;
             } else {
-                _e1 = _e1.simplify();
-                _e2 = _e2.simplify();
-                return simplify();
+                return this;
             }
         }
     }
@@ -104,18 +100,16 @@ namespace Exercise1_4{
         public override int eval(Dictionary<string, int> env) => _e1.eval(env) * _e2.eval(env);
 
         public override Expr simplify(){
-            if (_e1 is CstI && ((CstI) _e1).x == 0 || _e2 is CstI && ((CstI) _e2).x == 0){
+            Expr simp_e1 = _e1.simplify();
+            Expr simp_e2 = _e2.simplify();
+            if (simp_e1 is CstI && ((CstI) simp_e1).x == 0 || simp_e2 is CstI && ((CstI) simp_e2).x == 0){
                 return new CstI(0);
-            } else if (_e1 is CstI && ((CstI) _e1).x == 1){
-                return _e2.simplify();
-            } else if (_e2 is CstI && ((CstI) _e2).x == 1){
-                return _e1.simplify();
-            } else if ((_e1 is CstI || _e1 is Var) && (_e2 is CstI || _e2 is Var)){
-                return this;
+            } else if (simp_e1 is CstI && ((CstI) simp_e1).x == 1){
+                return simp_e2;
+            } else if (simp_e2 is CstI && ((CstI) simp_e2).x == 1){
+                return simp_e1;
             } else {
-                _e1 = _e1.simplify();
-                _e2 = _e2.simplify();
-                return simplify();
+                return this;
             }
         }
     }
