@@ -144,7 +144,7 @@ let rec simplify (ae: aexpr) : aexpr =
 
     | Sub(ae1, ae2) -> 
         match ae1, ae2 with 
-        | _, CstI i when i = 0  -> simplify ae1
+        | _, CstI 0  -> simplify ae1
         | _, _ when ae1 = ae2   -> CstI 0
         | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
                                 -> Sub(ae1, ae2)
@@ -152,10 +152,10 @@ let rec simplify (ae: aexpr) : aexpr =
 
     | Mul(ae1, ae2) -> 
         match ae1, ae2 with
-        | CstI i, _ when i = 1  -> simplify ae2
-        | CstI i, _ when i = 0  -> CstI 0
-        | _, CstI i when i = 1  -> simplify ae1
-        | _, CstI i when i = 0  -> CstI 0
+        | CstI 1, _ -> simplify ae2
+        | CstI 0, _ -> CstI 0
+        | _, CstI 1 -> simplify ae1
+        | _, CstI 0 -> CstI 0
         | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
                                 -> Mul(ae1, ae2)
         | _, _                  -> simplify (Mul(simplify ae1, simplify ae2))
