@@ -132,27 +132,44 @@ printfn "%A = %A" aex3 (fmt aex3)
 (* 1.2.4 *)
 let rec simplify (ae: aexpr) : aexpr =
     match ae with
-    | CstI i -> ae
-    | Var x -> ae
+    | CstI i    -> ae
+    | Var x     -> ae
     | Add(ae1, ae2) -> 
         match ae1, ae2 with
-        | CstI i, _ -> if i = 0 then ae2 else Add(simplify ae1, simplify ae2) 
-        | _, CstI i -> if i = 0 then ae1 else Add(simplify ae1, simplify ae2)
-        | _, _ -> Add(simplify ae1, simplify ae2)
+        | CstI 0, _ -> simplify ae2
+        | _, CstI 0 -> simplify ae1
+        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
+                    -> Add(ae1, ae2)
+        | _, _      -> simplify (Add(simplify ae1, simplify ae2))
 
     | Sub(ae1, ae2) -> 
         match ae1, ae2 with 
-        | _, CstI i -> if i = 0 then ae1 else Sub(simplify ae1, simplify ae2)
-        | _, _ -> if ae1 = ae2 then CstI 0 else Sub(simplify ae1, simplify ae2)
+        | _, CstI i when i = 0  -> simplify ae1
+        | _, _ when ae1 = ae2   -> CstI 0
+        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
+                                -> Sub(ae1, ae2)
+        | _, _                  -> simplify (Sub(simplify ae1, simplify ae2))
 
     | Mul(ae1, ae2) -> 
         match ae1, ae2 with
-        | CstI i, _ -> if i = 1 then ae2 else if i = 0 then CstI 0 else Mul(simplify ae1, simplify ae2)
-        | _, CstI i -> if i = 1 then ae1 else if i = 0 then CstI 0 else Mul(simplify ae1, simplify ae2)
-        | _, _ -> Mul(simplify ae1, simplify ae2)
+        | CstI i, _ when i = 1  -> simplify ae2
+        | CstI i, _ when i = 0  -> CstI 0
+        | _, CstI i when i = 1  -> simplify ae1
+        | _, CstI i when i = 0  -> CstI 0
+        | CstI _, CstI _ | CstI _, Var _ | Var _, CstI _ | Var _, Var _
+                                -> Mul(ae1, ae2)
+        | _, _                  -> simplify (Mul(simplify ae1, simplify ae2))
 
+
+printfn "\nExercise 1.2.4"
 let se1 = Add(Var "e", Add(Var "e", CstI 0))
-simplify se1
+printfn "%A = %A" se1 (fmt (simplify se1))
+
+let se2 = Add(Var "e", Mul(Var "e", CstI 0))
+printfn "%A = %A" se2 (fmt (simplify se2))
+
+let se3 = Add(Var "e", Mul(Mul(Var "e", CstI 1), Sub(Var "a", Var "a")))
+printfn "%A = %A" se3 (fmt (simplify se3))
 
 (* 1.2.5 *)
 let rec aeval (ae : aexpr) (env : (string * int) list) : int = 
@@ -163,5 +180,7 @@ let rec aeval (ae : aexpr) (env : (string * int) list) : int =
     | Sub(ae1, ae2) -> (aeval ae1 env) - (aeval ae2 env)
     | Mul(ae1, ae2) -> (aeval ae1 env) * (aeval ae2 env)
 
+
+printfn "\nExercise 1.2.5"
 let ae2 = Add(Var "a", Add(Var "a", CstI 5))
-let aresult2 = aeval ae2 env
+printfn "%A = %A" ae2 (aeval ae2 env)
