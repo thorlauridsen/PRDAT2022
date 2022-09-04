@@ -136,8 +136,8 @@ let rec simplify (ae: aexpr) : aexpr =
     | Var x     -> ae
     | Add(ae1, ae2) -> 
         match simplify ae1, simplify ae2 with
-        | CstI 0, simpAe2 -> ae2
-        | simpAe1, CstI 0 -> ae1
+        | CstI 0, simpAe2 -> simpAe2
+        | simpAe1, CstI 0 -> simpAe1
         | simpAe1, simpAe2      -> Add(simpAe1, simpAe2)
 
     | Sub(ae1, ae2) -> 
