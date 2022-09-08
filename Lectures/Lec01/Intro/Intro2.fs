@@ -163,7 +163,7 @@ let se2 = Add(Var "e", Mul(Var "e", CstI 0))
 printfn "%A = %A" se2 (fmt (simplify se2))
 
 let se3 = Add(Var "e", Mul(Mul(Var "e", CstI 1), Sub(Var "a", Var "a")))
-printfn "%A = %A" se3 (fmt (simplify se3))
+printfn "%A = %A = %A" se3 (fmt se3) (fmt (simplify se3))
 
 (* 1.2.5 *)
 let rec aeval (ae : aexpr) (env : (string * int) list) : int = 
