@@ -59,6 +59,15 @@ Lastly, we will unify each seperate NFA into 1 final NFA:
 ### b)
 Through building this DFA, we have made the followig matrix:
 
+| DFA | Ved A | Ved B | NFA-tilstande |
+| --- | ----- | ----- | ----------------------------------- |
+| S0  | S1    | S4    | {1,2,4,5,6,8}                       |
+| S1  | S2    | S4    | {2,3,4,5,6,7,8,10,11}               |
+| S2  | S3    | S4    | {2,3,4,5,6,7,8,10,11,12,13}         |
+| S3  | S3    | S4    | {2,3,4,5,6,7,8,10,11,12,13,14}      |
+| S4  | S5    | X     | {9,10,11}                           |
+| S5  | S6    | X     | {12,13}                             |
+| S6  | X     | X     | {14}                                |
 This translates into the followig DFA:
 
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png" width="50%">
