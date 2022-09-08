@@ -10,7 +10,7 @@ Our regular expression solution for a regular expression which recognizesallsequ
 
 
 ### NFA 
-<img src="https://github.com/REXKrash/PRDAT2022/tree/main/Lectures/Lec02/images/PLC3_2/SFA.jpg" width="50%">
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/SFA.jpg" width="50%">
 
 
 ### DFA
@@ -21,7 +21,7 @@ Our regular expression solution for a regular expression which recognizesallsequ
 | S1  | S2    | S1    | {3}           |
 | S2  | X     | S1    | {5}           |
 
-<img src="https://github.com/REXKrash/PRDAT2022/tree/main/Lectures/Lec02/images/PLC3_2/DFA.jpg" width="50%">
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/DFA.jpg" width="50%">
 
 
 ## BCD 2.1
@@ -40,5 +40,17 @@ Note: We were confused about the phrasing of the question, and asked a TA. For e
 
 ### a)
 To make a NFA, we have divided the regular expression into 3 parts (a*, a|b and aa): 
-<img src="https://github.com/REXKrash/PRDAT2022/tree/main/Lectures/Lec02/images/BCD2_2/NFAv0.png" width="50%">
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv0.png" width="50%">
 
+We then make seperate NFAs for each part:
+#### a*
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv01.png" width="50%">
+
+#### a|b
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv02.png" width="50%">
+
+#### aa
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv03.png" width="50%">
+
+Lastly, we will unify each seperate NFA into 1 final NFA:
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv1.png" width="75%">
