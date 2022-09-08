@@ -68,6 +68,8 @@ Through building this DFA, we have made the followig matrix:
 | S4  | S5    | X     | {9,10,11}                           |
 | S5  | S6    | X     | {12,13}                             |
 | S6  | X     | X     | {14}                                |
+
+
 This translates into the followig DFA:
 
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png" width="50%">
