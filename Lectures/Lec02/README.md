@@ -15,7 +15,7 @@ Our regular expression solution for a regular expression which recognizesallsequ
 
 ### DFA
 
-| DFA | Ved A | Ved B | NFA-tilstande |
+| DFA | At A  | At B  | NFA-states    |
 | --- | ----- | ----- | ------------- |
 | S0  | S2    | S1    | {1,2,4}       |
 | S1  | S2    | S1    | {3}           |
@@ -59,7 +59,7 @@ Lastly, we will unify each seperate NFA into 1 final NFA:
 ### b)
 Through building this DFA, we have made the followig matrix:
 
-| DFA | Ved A | Ved B | NFA-tilstande |
+| DFA | At A  | At B  | NFA-states                          |
 | --- | ----- | ----- | ----------------------------------- |
 | S0  | S1    | S4    | {1,2,4,5,6,8}                       |
 | S1  | S2    | S4    | {2,3,4,5,6,7,8,10,11}               |
