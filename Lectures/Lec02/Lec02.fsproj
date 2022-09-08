@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- <Compile Include="Expr/Absyn.fs" />
+        <Compile Include="Expr/ExprPar.fsi" />
+        <Compile Include="Expr/ExprPar.fs" />
+        <Compile Include="Expr/ExprLex.fs" />
+        <Compile Include="Expr/Parse.fs" />
+        <Compile Include="Expr/Expr.fs" /> -->
+        <Compile Include="ex2_4Handout.fs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <PackageReference Update="FSharp.Core" Version="6.0.3" />
+    </ItemGroup>
+</Project>
