@@ -34,7 +34,8 @@ Note: We were confused about the phrasing of the question, and asked a TA. For e
 ### b)
 `(?!(([0-9]*42[0-9]*)+))[0-9]+(?<!((42)))`
 
-
+### c)
+`0*([1-9][0-9]{2,}|4[3-9]|[5-9][0-9])`
 
 ## BCD 2.2
 
@@ -43,14 +44,21 @@ To make a NFA, we have divided the regular expression into 3 parts (a*, a|b and 
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv0.png" width="50%">
 
 We then make seperate NFAs for each part:
-#### a*
+#### NFA for _a*_
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv01.png" width="50%">
 
-#### a|b
+#### NFA for _a|b_
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv02.png" width="50%">
 
-#### aa
+#### NFA for _aa_
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv03.png" width="50%">
 
 Lastly, we will unify each seperate NFA into 1 final NFA:
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv1.png" width="75%">
+
+### b)
+Through building this DFA, we have made the followig matrix:
+
+This translates into the followig DFA:
+
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png" width="50%">
