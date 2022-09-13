@@ -11,6 +11,6 @@ jobs:
         uses: willfantom/md2pdf-action@v1
         id: md2pdf
         with:
-          markdownSrcPattern: "README.md"
+          markdownSrcPattern: "*.md"
       - name: Check Conversion
         run: '[[ "${{ steps.md2pdf.outputs.convertedFiles }}" == "README" ]] && echo "Converted" || exit 1'
