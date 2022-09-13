@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  test-conversion:
+    runs-on: ubuntu-latest
+    name: Convert README to PDF
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Convert README
+        uses: willfantom/md2pdf-action@v1
+        id: md2pdf
+        with:
+          markdownSrcPattern: "README.md"
+      - name: Check Conversion
+        run: '[[ "${{ steps.md2pdf.outputs.convertedFiles }}" == "README" ]] && echo "Converted" || exit 1'
