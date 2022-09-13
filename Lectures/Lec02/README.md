@@ -73,3 +73,38 @@ Through building this DFA, we have made the followig matrix:
 This translates into the followig DFA:
 
 <img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png" width="50%">
+
+## HelloLex exercises:
+
+### Question 1:
+What are the regular expressions involved, and
+which semantic values are they associated with?
+
+[0-9]
+
+This is a single digit which is one of the natural numbers
+
+
+### Question 2:
+Which additional file is generated during the process?
+hello.fs
+
+How many states are there by the automaton of the lexer?
+3 states
+
+
+### Question 3:
+Compile and run the generated program
+
+
+### Question 4:
+Extend the lexer specification hello.fsl to
+recognize numbers of more than one digit. New
+lexer specification is hello2.fsl. Generate
+hello2.fs, compile and run the generated program.
+
+### Question 5:
+Extend the lexer specification hello2.fsl to recognize floating
+numbers. New lexer specification is hello3.fsl. Generate
+hello3.fs, compile and run the generated program.
+
