@@ -1,6 +1,6 @@
 # Answers
 
-## PLC 2.4 & 2.5
+## PLC 2.4 & 2.5 
 
 Our answers to these exercises can be viewed here: https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/ex2_4Handout.fs
 
