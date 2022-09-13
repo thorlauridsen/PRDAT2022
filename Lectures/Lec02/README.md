@@ -32,7 +32,7 @@ Note: We were confused about the phrasing of the question, and asked a TA. For e
 `([0-9]*42[0-9]*)+`
 
 ### b)
-`(?!(([0-9]*42[0-9]*)+))[0-9]+(?<!((42)))`
+`^(?!.*42.*)[0-9]+`
 
 ### c)
 `0*([1-9][0-9]{2,}|4[3-9]|[5-9][0-9])`
