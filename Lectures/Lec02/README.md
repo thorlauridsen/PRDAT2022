@@ -96,6 +96,7 @@ How many states are there by the automaton of the lexer?
 ### Question 3:
 Compile and run the generated program
 
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question3.png" width="50%">
 
 ### Question 4:
 Extend the lexer specification hello.fsl to
@@ -103,8 +104,11 @@ recognize numbers of more than one digit. New
 lexer specification is hello2.fsl. Generate
 hello2.fs, compile and run the generated program.
 
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question4.png" width="50%">
+
 ### Question 5:
 Extend the lexer specification hello2.fsl to recognize floating
 numbers. New lexer specification is hello3.fsl. Generate
 hello3.fs, compile and run the generated program.
 
+<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question5.png" width="50%">
