@@ -27,12 +27,7 @@ namespace Exercise1_4{
         public string v {get;}
         public override string ToString() => $"{v}";
         public override int eval(Dictionary<string, int> env){
-            try {
-                return env[v];
-            } catch (KeyNotFoundException e){
-                System.Console.WriteLine(e.Message + " Value of '" + v + "' will temporarily be set to 0.");
-                return 0;
-            }
+			return env[v];
         }
 
         public override Expr simplify() => this;

@@ -231,17 +231,22 @@ let rec freevars e : string list =
             let left = List.fold(fun acc (x, erhs) -> 
                             [x] @ (freevars erhs) @ acc    
                         ) [] lst
-
-            minus (left, freevars ebody)
+            let right = freevars ebody
+            let freeVarsLeft = minus (left, right)
+            let freeVarsRight = minus (right, left)
+            union (freeVarsLeft, freeVarsRight)
     | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
 
 let closedEx1 = Let([("x", CstI 10); ("y", CstI 5)], Prim("+", Var "x", Var "y")) 
 let freeEx1 = Let([("x", Var "z"); ("y", CstI 5)], Prim("+", Var "x", Var "y")) 
+let freeEx2 = Let([("x", CstI 2)],Prim("+", Var "x", Var "y"))
 
 freevars closedEx1
 freevars freeEx1
+freevars freeEx2
 
 let ae1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
+
 
 
 (* Alternative definition of closed *)
@@ -284,14 +289,16 @@ let rec tcomp (e : expr) (cenv : string list) : texpr =
     match e with
     | CstI i -> TCstI i
     | Var x  -> TVar (getindex cenv x)
-    | Let(lst, ebody) ->  //Let(x, erhs, ebody)
+    | Let(lst, ebody) ->
         match lst with
         | [] -> tcomp ebody cenv 
         | (x, erhs) :: tail -> 
             let cenv1 = x :: cenv
-            TLet(tcomp (Let(tail, ebody)) cenv1, tcomp ebody cenv1)
-
+            TLet(tcomp erhs cenv, tcomp (Let(tail, ebody)) cenv1)
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
+
+let testTcomp = Let([("x", CstI 2);("y", CstI 1)],Prim("+", Var "x", Var "y"))
+let yeppa = tcomp testTcomp []
 
 let testExpr = Let([("x", CstI 5); ("z", CstI 10)], Prim("+", Var "x", Var "z"))
 let testComp = tcomp (temp) ["x"; "z"]

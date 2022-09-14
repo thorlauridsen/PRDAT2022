@@ -6,7 +6,7 @@ Our answers to these exercises can be viewed here: https://github.com/REXKrash/P
 
 ## PLC 3.2
 
-Our regular expression solution for a regular expression which recognizesallsequencesconsistingof _a_ and _b_ where two _a_’s are always separated by at least one _b_, is "`^(b|ab|a$)+$`".
+Our regular expression solution for a regular expression which recognizes all sequences consisting of _a_ and _b_ where two _a_’s are always separated by at least one _b_, is "`^(b|ab|a$)+$`".
 
 
 ### NFA 
@@ -25,7 +25,7 @@ Our regular expression solution for a regular expression which recognizesallsequ
 
 ## BCD 2.1
 
-Note: We were confused about the phrasing of the question, and asked a TA. For example, we ewre cofused whether "All number-strings that have the value 42." meant any number that had "42" in it, such as 1230420123, or if it is any number that equals 42, such as 0000042. We were told the former was the correct understandig, and have done the excercises in such a mannner.
+Note: We were confused about the phrasing of the question, and asked a TA. For example, we were confused whether "All number-strings that have the value 42." meant any number that had "42" in it, such as 1230420123, or if it is any number that equals 42, such as 0000042. We were told the former was the correct understandig, and have done the exercises in such a manner.
 
 ### a)
 `([0-9]*42[0-9]*)+`
@@ -42,7 +42,7 @@ Note: We were confused about the phrasing of the question, and asked a TA. For e
 To make a NFA, we have divided the regular expression into 3 parts (a*, a|b and aa):
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv0.png?raw=true) 
 
-We then make seperate NFAs for each part:
+We then make separate NFAs for each part:
 #### NFA for _a*_
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv01.png?raw=true) 
 
@@ -52,11 +52,11 @@ We then make seperate NFAs for each part:
 #### NFA for _aa_
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv03.png?raw=true) 
 
-Lastly, we will unify each seperate NFA into 1 final NFA:
+Lastly, we will unify each separate NFA into 1 final NFA:
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv1.png?raw=true) 
 
 ### b)
-Through building this DFA, we have made the followig matrix:
+Through building this DFA, we have made the following matrix:
 
 | DFA | At A | At B | NFA-states                        |
 | --- | ---- | ---- | --------------------------------- |
@@ -69,7 +69,7 @@ Through building this DFA, we have made the followig matrix:
 | S6  | X    | X    | {14,15}                           |
 
 
-This translates into the followig DFA:
+This translates into the following DFA:
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png?raw=true) 
 
 ## HelloLex exercises:
