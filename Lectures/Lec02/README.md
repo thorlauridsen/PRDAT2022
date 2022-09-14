@@ -10,18 +10,17 @@ Our regular expression solution for a regular expression which recognizesallsequ
 
 
 ### NFA 
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/SFA.jpg" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/SFA.jpg?raw=true)
 
 
 ### DFA
 
-| DFA | At A  | At B  | NFA-states    |
-| --- | ----- | ----- | ------------- |
-| S0  | S2    | S1    | {1,2,4}       |
-| S1  | S2    | S1    | {3}           |
-| S2  | X     | S1    | {5}           |
-
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/DFA.jpg" width="50%">
+| DFA | At A | At B | NFA-states |
+| --- | ---- | ---- | ---------- |
+| S0  | S2   | S1   | {1,2,4}    |
+| S1  | S2   | S1   | {3}        |
+| S2  | X    | S1   | {5}        |
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/DFA.jpg?raw=true)
 
 
 ## BCD 2.1
@@ -40,39 +39,38 @@ Note: We were confused about the phrasing of the question, and asked a TA. For e
 ## BCD 2.2
 
 ### a)
-To make a NFA, we have divided the regular expression into 3 parts (a*, a|b and aa): 
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv0.png" width="50%">
+To make a NFA, we have divided the regular expression into 3 parts (a*, a|b and aa):
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv0.png?raw=true) 
 
 We then make seperate NFAs for each part:
 #### NFA for _a*_
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv01.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv01.png?raw=true) 
 
 #### NFA for _a|b_
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv02.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv02.png?raw=true) 
 
 #### NFA for _aa_
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv03.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv03.png?raw=true) 
 
 Lastly, we will unify each seperate NFA into 1 final NFA:
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv1.png" width="75%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/NFAv1.png?raw=true) 
 
 ### b)
 Through building this DFA, we have made the followig matrix:
 
-| DFA | At A  | At B  | NFA-states                        |
-| --- | ----- | ----- | --------------------------------- |
-| S0  | S1    | S4    | {1,2,4,5,6,8}                     |
-| S1  | S2    | S4    | {2,3,4,5,6,7,8,10,11,12}          |
-| S2  | S3    | S4    | {2,3,4,5,6,7,8,10,11,12,13}       |
-| S3  | S3    | S4    | {2,3,4,5,6,7,8,10,11,12,13,14,15} |
-| S4  | S5    | X     | {9,10,11,12}                      |
-| S5  | S6    | X     | {13}                              |
-| S6  | X     | X     | {14,15}                           |
+| DFA | At A | At B | NFA-states                        |
+| --- | ---- | ---- | --------------------------------- |
+| S0  | S1   | S4   | {1,2,4,5,6,8}                     |
+| S1  | S2   | S4   | {2,3,4,5,6,7,8,10,11,12}          |
+| S2  | S3   | S4   | {2,3,4,5,6,7,8,10,11,12,13}       |
+| S3  | S3   | S4   | {2,3,4,5,6,7,8,10,11,12,13,14,15} |
+| S4  | S5   | X    | {9,10,11,12}                      |
+| S5  | S6   | X    | {13}                              |
+| S6  | X    | X    | {14,15}                           |
 
 
 This translates into the followig DFA:
-
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/BCD2_2/DFA.png?raw=true) 
 
 ## HelloLex exercises:
 
@@ -96,7 +94,7 @@ How many states are there by the automaton of the lexer?
 ### Question 3:
 Compile and run the generated program
 
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question3.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question3.png?raw=true)
 
 ### Question 4:
 Extend the lexer specification hello.fsl to
@@ -104,11 +102,11 @@ recognize numbers of more than one digit. New
 lexer specification is hello2.fsl. Generate
 hello2.fs, compile and run the generated program.
 
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question4.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question4.png?raw=true) 
 
 ### Question 5:
 Extend the lexer specification hello2.fsl to recognize floating
 numbers. New lexer specification is hello3.fsl. Generate
 hello3.fs, compile and run the generated program.
 
-<img src="https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question5.png" width="50%">
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/HelloLex/Question5.png?raw=true)
