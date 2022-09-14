@@ -20,6 +20,7 @@ Our regular expression solution for a regular expression which recognizes all se
 | S0  | S2   | S1   | {1,2,4}    |
 | S1  | S2   | S1   | {3}        |
 | S2  | X    | S1   | {5}        |
+
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec02/images/PLC3_2/DFA.jpg?raw=true)
 
 
