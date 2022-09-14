@@ -6,7 +6,7 @@ Our answers to these exercises can be viewed here: https://github.com/REXKrash/P
 
 ## PLC 3.2
 
-Our regular expression solution for a regular expression which recognizes all sequences consisting of _a_ and _b_ where two _a_’s are always separated by at least one _b_, is "`^(b|ab|a$)+$`".
+Our regular expression solution for a regular expression which recognizes all sequences consisting of _a_ and _b_ where two _a_’s are always separated by at least one _b_, is "`^(b | ab | a$)+$`".
 
 
 ### NFA 
