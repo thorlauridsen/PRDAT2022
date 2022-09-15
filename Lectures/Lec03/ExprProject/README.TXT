@@ -6,15 +6,14 @@ Archive expr.zip contains the files used below.
 A. Generating and compiling the lexer and parser for the expression
    language:
 
+   Tested on Mac with Mono and fsharp installed as shown in LearnIt
+
    fslex --unicode ExprLex.fsl
    fsyacc --module ExprPar ExprPar.fsy
-   fsharpi -r FsLexYacc.Runtime.dll Absyn.fs ExprPar.fs ExprLex.fs Parse.fs
+   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs ExprPar.fs ExprLex.fs Parse.fs 
 
    open Parse;;
    fromString "2 + 3 * 4";;     
-
-   #q;;
-
 
 B. Generating and compiling the lexer and parser for the expression
    language, and loading the interpreter eval, the compiler (to simple
@@ -22,7 +21,7 @@ B. Generating and compiling the lexer and parser for the expression
 
    fslex --unicode ExprLex.fsl
    fsyacc --module ExprPar ExprPar.fsy
-   fsharpi -r FsLexYacc.Runtime.dll Absyn.fs ExprPar.fs ExprLex.fs Parse.fs Expr.fs
+   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs ExprPar.fs ExprLex.fs Parse.fs Expr.fs
 
    open Parse;;
    open Expr;;
