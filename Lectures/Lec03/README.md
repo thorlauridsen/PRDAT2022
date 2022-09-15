@@ -42,5 +42,3 @@
 ## PLC 3.7
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/IfThenElse.png?raw=true)
 
-
-## PLC 3.8
