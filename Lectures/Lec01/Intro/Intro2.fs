@@ -181,13 +181,13 @@ let rec aeval (ae : aexpr) (env : (string * int) list) : int =
 *)
 let rec symDiff (ae : aexpr) (arg : string) : aexpr =
     match ae with
-    | CstI _               -> CstI 0
-    | Var b when b <> arg  -> CstI 0
-    | Var a when a = arg   -> CstI 1
-    | Add(ae1, ae2) -> Add(symDiff ae1 arg, symDiff ae2 arg)
-    | Sub(ae1, ae2) -> Sub(symDiff ae1 arg, symDiff ae2 arg)
-    | Mul(ae1, ae2) -> Add(Mul(symDiff ae1 arg, ae2), Mul(ae1, symDiff ae2 arg))
-    | _ -> failwith "Cannot be symbolically differentiated."
+    | CstI _                -> CstI 0
+    | Var n when n <> arg   -> CstI 0
+    | Var n                 -> CstI 1
+    | Add(ae1, ae2)         -> Add(symDiff ae1 arg, symDiff ae2 arg)
+    | Sub(ae1, ae2)         -> Sub(symDiff ae1 arg, symDiff ae2 arg)
+    | Mul(ae1, ae2)         -> Add(Mul(symDiff ae1 arg, ae2), Mul(ae1, symDiff ae2 arg))
+    | _                     -> failwith "Cannot be symbolically differentiated."
 
 
 printfn "\nExercise 1.2.5"
