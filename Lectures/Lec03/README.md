@@ -35,5 +35,12 @@
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString9.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString10.png?raw=true)
 
+## PLC 3.6
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/compString.png?raw=true)
 
 
+## PLC 3.7
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/IfThenElse.png?raw=true)
+
+
+## PLC 3.8
