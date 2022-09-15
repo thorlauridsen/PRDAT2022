@@ -18,3 +18,29 @@
 | => LET NAME EQ Expr IN NAME PLUS CSTINT TIMES CSTINT END EOF             | B    |
 | => LET NAME EQ LPAR Expr RPAR IN NAME PLUS CSTINT TIMES CSTINT END EOF   | E    |
 | => LET NAME EQ LPAR CSTINT RPAR IN NAME PLUS CSTINT TIMES CSTINT END EOF | C    |
+
+## PLC 3.4
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Diagrams/Exercise3_4.jpg?raw=true)
+
+
+## PLC 3.5
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString1.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString2.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString3.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString4.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString5.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString6.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString7.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString8.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString9.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/fromString10.png?raw=true)
+
+## PLC 3.6
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/compString.png?raw=true)
+
+
+## PLC 3.7
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec03/Images/IfThenElse.png?raw=true)
+
+
+## PLC 3.8
