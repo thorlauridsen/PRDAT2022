@@ -6,13 +6,14 @@ module Parse
 open System
 open System.IO
 open System.Text
-open FSharp.Text.Lexing
+open (*Microsoft.*)FSharp.Text
 open Absyn
+open Expr
 
 (* Plain parsing from a string, with poor error reporting *)
 
 let fromString (str : string) : expr =
-    let lexbuf = LexBuffer<char>.FromString(str)
+    let lexbuf = Lexing.LexBuffer<char>.FromString(str)
     try 
       ExprPar.Main ExprLex.Token lexbuf
     with 
@@ -24,7 +25,7 @@ let fromString (str : string) : expr =
 
 let fromFile (filename : string) =
     use reader = new StreamReader(filename)
-    let lexbuf = LexBuffer<char>.FromTextReader reader
+    let lexbuf = Lexing.LexBuffer<char>.FromTextReader reader
     try 
       ExprPar.Main ExprLex.Token lexbuf
     with 
@@ -32,3 +33,6 @@ let fromFile (filename : string) =
                failwithf "%s in file %s near line %d, column %d\n" 
                   (exn.Message) filename (pos.Line+1) pos.Column
 
+let compString (str : string) : sinstr list =
+    let exp = fromString str
+    scomp exp []
