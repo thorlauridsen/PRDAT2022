@@ -166,6 +166,7 @@ let se3 = Add(Var "e", Mul(Mul(Var "e", CstI 1), Sub(Var "a", Var "a")))
 printfn "%A = %A = %A" se3 (fmt se3) (fmt (simplify se3))
 
 (* 1.2.5 *)
+(* Old version:
 let rec aeval (ae : aexpr) (env : (string * int) list) : int = 
     match ae with
     | CstI i -> i
@@ -174,7 +175,22 @@ let rec aeval (ae : aexpr) (env : (string * int) list) : int =
     | Sub(ae1, ae2) -> (aeval ae1 env) - (aeval ae2 env)
     | Mul(ae1, ae2) -> (aeval ae1 env) * (aeval ae2 env)
 
+    printfn "\nExercise 1.2.5"
+    let ae2 = Add(Var "a", Add(Var "a", CstI 5))
+    printfn "%A = %A" ae2 (aeval ae2 env)
+*)
+let rec symDiff (ae : aexpr) (arg : string) : aexpr =
+    match ae with
+    | CstI _               -> CstI 0
+    | Var b when b <> arg  -> CstI 0
+    | Var a when a = arg   -> CstI 1
+    | Add(ae1, ae2) -> Add(symDiff ae1 arg, symDiff ae2 arg)
+    | Sub(ae1, ae2) -> Sub(symDiff ae1 arg, symDiff ae2 arg)
+    | Mul(ae1, ae2) -> Add(Mul(symDiff ae1 arg, ae2), Mul(ae1, symDiff ae2 arg))
+    | _ -> failwith "Cannot be symbolically differentiated."
+
 
 printfn "\nExercise 1.2.5"
-let ae2 = Add(Var "a", Add(Var "a", CstI 5))
-printfn "%A = %A" ae2 (aeval ae2 env)
+let ae2 = Add(Add(Var "a", Add(Mul(CstI 5, Mul(Var "a", Var "a")), CstI 5)), Var "b")
+printfn "%A => %A" ae2 (symDiff ae2 "a")
+printfn "%A => %A" (fmt (simplify ae2)) (fmt (simplify (symDiff ae2 "a")))
