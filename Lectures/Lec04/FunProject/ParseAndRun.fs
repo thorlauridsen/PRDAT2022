@@ -19,5 +19,29 @@ let ex3 = run (fromString "let f x = x + 7 in f 2 end");;
 
 run (fromString "let sum n = if n < 0 then n + sum(n-1) else 0 in sum 1000 end");;
 run (fromString "let sum n = if n = 0 then 0 else n + sum(n-1) in sum 1000 end");;
-run (fromString "let pow8 n = if n = 0 then 1 else 3 * pow8(n-1) in pow8 8 end");;
-run (fromString "let compu1 n = if n = 0 then 1 else pow(n) + compu1(n-1) in end");; 
+run (fromString "let pow n = 
+                        if n = 0 then 
+                            1 
+                        else 3 * pow(n-1) 
+                    in pow 8 end");;
+
+run (fromString "let pow n = 
+                    if n = 0 then 
+                        1 
+                    else 
+                        3 * pow(n-1) 
+                    in let compu m = 
+                        if m = 0 then 
+                            1 
+                        else 
+                            compu(m-1) + pow m 
+                        in compu 11 end end");;
+
+run (fromString "let pow8 n = 
+                    n * n * n * n * n * n * n * n 
+                in let compu m =
+                    if m = 0 then
+                        0
+                    else
+                        compu(m-1) + pow8 m
+                     in compu 10 end end");;
