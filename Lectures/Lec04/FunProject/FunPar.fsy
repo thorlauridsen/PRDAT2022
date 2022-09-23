@@ -53,16 +53,26 @@ Expr:
 ;
 
 AtExpr:
-    Const                               { $1                     }
-  | NAME                                { Var $1                 }
-  | LET NAME EQ Expr IN Expr END        { Let($2, $4, $6)        }
-  | LET NAME NAME EQ Expr IN Expr END   { Letfun($2, $3, $5, $7) }
-  | LPAR Expr RPAR                      { $2                     }
+    Const                                       { $1                     }
+  | NAME                                        { Var $1                 }
+  | LET NAME EQ Expr IN Expr END                { Let($2, $4, $6)        }
+  | LET NAME NamesList EQ Expr IN Expr END      { Letfun($2, $3, $5, $7) }
+  | LPAR Expr RPAR                              { $2                     }
+;
+
+NamesList: 
+    NAME                                    { [$1]     }
+  | NAME NamesList                          { $1 :: $2 }
+;
+
+atExprList: 
+    AtExpr                                     { [$1]     }
+  | AtExpr atExprList                          { $1 :: $2 }
 ;
 
 AppExpr:
-    AtExpr AtExpr                       { Call($1, $2)           }
-  | AppExpr AtExpr                      { Call($1, $2)           }
+    AtExpr atExprList                       { Call($1, $2)           }
+  | AppExpr atExprList                      { Call($1, $2)           }
 ;
 
 Const:
