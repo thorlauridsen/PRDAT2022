@@ -10,7 +10,6 @@
 
 Code can be seen in ParseAndRun.fs
 ```fsharp
-run (fromString "let sum n = if n < 0 then n + sum(n-1) else 0 in sum 1000 end");;
 run (fromString "let sum n = if n = 0 then 0 else n + sum(n-1) in sum 1000 end");;
 run (fromString "let pow n = 
                         if n = 0 then 
@@ -39,6 +38,12 @@ run (fromString "let pow8 n =
                         compu(m-1) + pow8 m
                      in compu 10 end end");;
 ```
+
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.2a.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.2b.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.2c.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.2d.png?raw=true)
+
 
 ## Exercise 4.3
 
@@ -98,3 +103,6 @@ let rec eval (e : expr) (env : value env) : int =
 
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.5.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.5b.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.5c.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.5d.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec04/Images/Exercise4.5e.png?raw=true)
