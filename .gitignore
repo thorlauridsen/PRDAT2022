@@ -114,4 +114,6 @@ fabric.properties
 # Ignore code-workspaces
 *.code-workspace
 
+Lectures/*.xml
+
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,rider,visualstudiocode
