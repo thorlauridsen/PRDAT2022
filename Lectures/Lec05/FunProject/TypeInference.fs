@@ -105,6 +105,7 @@ let rec freeTypeVars t : typevar list =
     match normType t with
     | TypI        -> []
     | TypB        -> []
+    | TypL t1     -> freeTypeVars t1
     | TypV tv     -> (*(printfn "%s" ("found free tyvar"));*) [tv]
     | TypF(t1,t2) -> union(freeTypeVars t1, freeTypeVars t2)
 
@@ -133,6 +134,7 @@ let rec typeToString t : string =
     match t with
     | TypI         -> "int"
     | TypB         -> "bool"
+    | TypL t1      -> typeToString t1 + " list"
     | TypV _       -> failwith "typeToString impossible"
     | TypF(t1, t2) -> "function"
 
@@ -143,6 +145,7 @@ let rec showType t : string =
         match normType t with
         | TypI         -> "int"
         | TypB         -> "bool"
+        | TypL t1      -> showType t1 + " list"
         | TypV tyvar   -> 
           match !tyvar with
           | (NoLink name, _) -> name
@@ -170,6 +173,7 @@ let rec unify t1 t2 : unit =
     match (t1', t2') with
     | (TypI, TypI) -> ()
     | (TypB, TypB) -> ()
+    | (TypL t1, TypL t2) -> unify t1 t2
     | (TypF(t11, t12), TypF(t21, t22)) -> (unify t11 t21; unify t12 t22)
     | (TypV tv1, TypV tv2) -> 
       let (_, tv1level) = !tv1
@@ -182,6 +186,7 @@ let rec unify t1 t2 : unit =
     | (TypI,     t) -> failwith ("type error: int and " + typeToString t)
     | (TypB,     t) -> failwith ("type error: bool and " + typeToString t)
     | (TypF _,   t) -> failwith ("type error: function and " + typeToString t)
+    | (TypL _,   t) -> failwith ("type error: list and " + typeToString t)
 
 (* Generate fresh type variables *)
 
@@ -224,6 +229,7 @@ let rec copyType subst t : typ =
     | TypF(t1,t2) -> TypF(copyType subst t1, copyType subst t2)
     | TypI        -> TypI
     | TypB        -> TypB
+    | TypL t1     -> TypL (copyType subst t1)
 
 (* Create a type from a type scheme (tvs, t) by instantiating all the
    type scheme's parameters tvs with fresh type variables *)
