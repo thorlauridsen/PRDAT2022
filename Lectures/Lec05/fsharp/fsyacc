@@ -1,0 +1,14 @@
+#!/bin/bash
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	BASE=$HOME/.local/bin/fsharp
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	BASE=$HOME/bin/fsharp
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+	BASE=/usr/bin/fsharp
+else
+	BASE=$HOME/bin/fsharp
+fi
+
+FSYACC=$BASE/fsyacc.exe
+FILE_NAME=${1%%.*}
+mono $FSYACC --module $FILE_NAME $*
