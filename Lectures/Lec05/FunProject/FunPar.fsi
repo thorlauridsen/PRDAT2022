@@ -10,7 +10,6 @@ type token =
   | LT
   | GE
   | LE
-  | FUNARROW
   | PLUS
   | MINUS
   | TIMES
@@ -26,6 +25,7 @@ type token =
   | THEN
   | TRUE
   | FUN
+  | FUNARROW
   | CSTBOOL of (bool)
   | NAME of (string)
   | CSTINT of (int)
@@ -39,7 +39,6 @@ type tokenId =
     | TOKEN_LT
     | TOKEN_GE
     | TOKEN_LE
-    | TOKEN_FUNARROW
     | TOKEN_PLUS
     | TOKEN_MINUS
     | TOKEN_TIMES
@@ -55,6 +54,7 @@ type tokenId =
     | TOKEN_THEN
     | TOKEN_TRUE
     | TOKEN_FUN
+    | TOKEN_FUNARROW
     | TOKEN_CSTBOOL
     | TOKEN_NAME
     | TOKEN_CSTINT

@@ -7,7 +7,7 @@ items D-E and type interence, item F.
 
 A. Loading the micro-ML evaluator, with abstract syntax only
 
-   fsharpi Absyn.fs Fun.fs
+   dotnet fsi Absyn.fs Fun.fs
 
    open Absyn;;
    open Fun;;
@@ -19,7 +19,7 @@ B. Generating and compiling the lexer and parser, and loading them:
 
    fsyacc --module FunPar FunPar.fsy
    fslex --unicode FunLex.fsl
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs   
+   dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs   
 
    open Parse;;
    let e1 = fromString "5+7";;
@@ -31,7 +31,7 @@ C. Using the lexer, parser and first-order evaluator together:
 
    fsyacc --module FunPar FunPar.fsy
    fslex --unicode FunLex.fsl
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs Fun.fs ParseAndRun.fs
+   dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs Fun.fs ParseAndRun.fs
 
    open ParseAndRun;;
    run (fromString "5+7");;
@@ -42,7 +42,7 @@ C. Using the lexer, parser and first-order evaluator together:
 D. Loading the evaluator for a higher-order functional language (same
    abstract syntax as the first-order language):
 
-   fsharpi Absyn.fs HigherFun.fs
+   dotnet fsi Absyn.fs HigherFun.fs
 
    open HigherFun;;
    eval ex1 [];;
@@ -60,17 +60,27 @@ E. Using the lexer, parser and higher-order evaluator together:
 
    fsyacc --module FunPar FunPar.fsy
    fslex --unicode FunLex.fsl
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs HigherFun.fs ParseAndRunHigher.fs
+   dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs HigherFun.fs ParseAndRunHigher.fs
 
    open ParseAndRunHigher;;
    run (fromString @"let twice f = let g x = f(f(x)) in g end 
                      in let mul3 z = z*3 in twice mul3 2 end end");;
+					 
+	run (fromString @"fun x -> 2*x");;
+	run (fromString @"let y = 22 in fun z -> z+y end");;
+	run (fromString @"let add x = fun y -> x+y in add 2 5 end");;
+	run (fromString @"let add = fun x -> fun y -> x+y in add 2 5 end");;
 
 F. Using the lexer, parser and polymorphic type inference together:
 
    fsyacc --module FunPar FunPar.fsy
    fslex --unicode FunLex.fsl
-   fsharpi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
+   dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
 
    open ParseAndType;;
    inferType (fromString "let f x = 1 in f 7 + f false end");;
+   inferType (fromString "let f x = 1 in f f end");;
+   inferType (fromString "let f g = g g in f end");;
+   inferType (fromString "let f x = let g y = y in g false end in f 42 end");;
+   inferType (fromString "let f x = let g y = if true then y else x in g false end");;
+   inferType (fromString "let f x = let g y = if true then y else x in g false end in f true end");;
