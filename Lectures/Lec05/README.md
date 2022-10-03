@@ -61,7 +61,21 @@ in add 2 end
 ```
 Since we only give the function one actual argument but expects 2, it returns a function.
 
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex61.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex61b.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex61c.png?raw=true)
+
 ## Exercise 6.2
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex62.png?raw=true)
+
 ## Exercise 6.3
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex63.png?raw=true)
+
 ## Exercise 6.4
+
 ## Exercise 6.5
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65a.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65b.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65c.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65d.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65e.png?raw=true)
