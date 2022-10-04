@@ -75,7 +75,7 @@ F. Using the lexer, parser and polymorphic type inference together:
 
 	fsyacc --module FunPar FunPar.fsy
 	fslex --unicode FunLex.fsl
-	dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
+	dotnet fsi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
 
 	open ParseAndType;;
 	inferType (fromString "let f x = 1 in f 7 + f false end");;
@@ -91,4 +91,20 @@ F. Using the lexer, parser and polymorphic type inference together:
 	int -> int
 	inferType (fromString "let f x = let g y = y in g 4 + x end in f end");;
 
-	inferType (fromString "let f x = let g y = y in g 4 + x end in f end");;
+   int -> int -> int
+	inferType (fromString "let f x = let g y = y + x in g end in f end");;
+
+   'a -> 'b -> 'a
+   inferType (fromString "let x = let g y = x in g end end");;
+
+   'a -> 'b -> 'b
+   inferType (fromString "let f x = let g y = y in g end in f end");;
+
+   ('a -> 'b) -> ('b -> 'c) -> ('a -> 'c)
+   // Virker ikke endnu
+   inferType (fromString "let f x = let g y = let h z = x (y z) in h end in g end in f end");;
+
+
+   'a -> 'b
+   // Virker ikke endnu
+   inferType (fromString "let f x = let y h = h in y end in f end");;
