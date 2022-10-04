@@ -73,14 +73,22 @@ E. Using the lexer, parser and higher-order evaluator together:
 
 F. Using the lexer, parser and polymorphic type inference together:
 
-   fsyacc --module FunPar FunPar.fsy
-   fslex --unicode FunLex.fsl
-   dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
+	fsyacc --module FunPar FunPar.fsy
+	fslex --unicode FunLex.fsl
+	dotnet fsi -r ~/fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs TypeInference.fs ParseAndType.fs
 
-   open ParseAndType;;
-   inferType (fromString "let f x = 1 in f 7 + f false end");;
-   inferType (fromString "let f x = 1 in f f end");;
-   inferType (fromString "let f g = g g in f end");;
-   inferType (fromString "let f x = let g y = y in g false end in f 42 end");;
-   inferType (fromString "let f x = let g y = if true then y else x in g false end");;
-   inferType (fromString "let f x = let g y = if true then y else x in g false end in f true end");;
+	open ParseAndType;;
+	inferType (fromString "let f x = 1 in f 7 + f false end");;
+	inferType (fromString "let f x = 1 in f f end");;
+	inferType (fromString "let f g = g g in f end");;
+	inferType (fromString "let f x = let g y = y in g false end in f 42 end");;
+	inferType (fromString "let f x = let g y = if true then y else x in g false end");;
+	inferType (fromString "let f x = let g y = if true then y else x in g false end in f true end");;
+
+	bool -> bool
+	inferType (fromString "let f x = let g y = y in g false = x end in f end");;
+
+	int -> int
+	inferType (fromString "let f x = let g y = y in g 4 + x end in f end");;
+
+	inferType (fromString "let f x = let g y = y in g 4 + x end in f end");;
