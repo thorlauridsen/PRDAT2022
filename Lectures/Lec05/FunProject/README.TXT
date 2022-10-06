@@ -95,7 +95,7 @@ F. Using the lexer, parser and polymorphic type inference together:
 	inferType (fromString "let f x = let g y = y + x in g end in f end");;
 
     'a -> 'b -> 'a
-    inferType (fromString "let x = let g y = x in g end end");;
+	inferType (fromString "let f x = let g y = x in g end in f end");;
 
     'a -> 'b -> 'b
     inferType (fromString "let f x = let g y = y in g end in f end");;
