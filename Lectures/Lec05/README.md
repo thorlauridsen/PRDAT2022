@@ -1,12 +1,13 @@
 # Assignment 5
 
 ## Exercise 5.1
+F# implementation:
 Can be found in `Exercises.fs`
 ```
 let merge (lst1, lst2) = List.sort (lst1 @ lst2)
 ```
 
-## Exercise 5.7
+C# implementation:
 Can be found in `Exercise5_1\Exercise5_1\Program.cs`
 ```
 static int[] merge(int[] xs, int[] ys){
@@ -42,6 +43,9 @@ public static void Main(string[] args){
     Console.WriteLine(String.Join(", ", merge(xs,ys)));
 }
 ```
+
+## Exercise 5.7
+Unfinished
 
 ## Exercise 6.1
 ```
