@@ -45,7 +45,10 @@ public static void Main(string[] args){
 ```
 
 ## Exercise 5.7
-Unfinished
+F# implementation:
+Can be found in `TypedFun.fs`
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex57a.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex57b.png?raw=true)
 
 ## Exercise 6.1
 ```
@@ -76,10 +79,55 @@ Since we only give the function one actual argument but expects 2, it returns a 
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex63.png?raw=true)
 
 ## Exercise 6.4
+Unfinished: Insert images of trees
+
+```
+let f x = 1 
+in f f end
+```
+```
+let f x = if x<10 then 42 else f(x+1)
+in f 20 end
+```
 
 ## Exercise 6.5
+
+1) Use the type inference on the micro-ML programs shown below, and report
+what type the program has. Some of the type inferences will fail because the
+programs are not typable in micro-ML; in those cases, explain why the program
+is not typable:
+
+UNFINISHED: Need to explain why some fails
+
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65a.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65b.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65c.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65d.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65e.png?raw=true)
+
+2) Write micro-ML programs for which the micro-ML type inference report the following types:
+```
+bool -> bool
+inferType (fromString "let f x = let g y = y in g false = x end in f end");;
+
+int -> int
+inferType (fromString "let f x = let g y = y in g 4 + x end in f end");;
+
+int -> int -> int
+inferType (fromString "let f x = let g y = y + x in g end in f end");;
+
+'a -> 'b -> 'a
+inferType (fromString "let f x = let g y = x in g end in f end");;
+
+'a -> 'b -> 'b
+inferType (fromString "let f x = let g y = y in g end in f end");;
+
+('a -> 'b) -> ('b -> 'c) -> ('a -> 'c)
+inferType (fromString "let f x = let g y = let h z = y (x z) in h end in g end in f end");;
+
+'a -> 'b
+inferType (fromString "let f x = f x in f end");;
+
+'a
+inferType (fromString "let f x = f x in f 2 end");;
+```
