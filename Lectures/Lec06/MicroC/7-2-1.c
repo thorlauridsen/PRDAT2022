@@ -11,7 +11,7 @@ int main() {
 
 void arrsum(int n, int arr[], int *sump) {
     if(n > 0){
-        *sump = arr[n];
+        *sump = arr[n] + *sump;
         arrsum(n-1, arr, &sump);
     }
 }
