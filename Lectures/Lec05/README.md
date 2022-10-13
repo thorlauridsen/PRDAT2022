@@ -97,12 +97,14 @@ what type the program has. Some of the type inferences will fail because the
 programs are not typable in micro-ML; in those cases, explain why the program
 is not typable:
 
-UNFINISHED: Need to explain why some fails
-
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65a.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65b.png?raw=true)
+
+The one above fails because of circularity.
+If you look at `g g`, it shows that g is a function and is given g which is also a function.
+This means it goes on forever and g would continue expecting another function which expects another function and so on.
+
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65c.png?raw=true)
-![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65d.png?raw=true)
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex65e.png?raw=true)
 
 2) Write micro-ML programs for which the micro-ML type inference report the following types:
