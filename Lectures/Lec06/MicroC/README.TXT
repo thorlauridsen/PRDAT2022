@@ -17,6 +17,16 @@ A. Generating and compiling the lexer and parser for micro-C, and
    run (fromFile "ex5.c");;
    run (fromFile "ex11.c") [8];;
 
+   mac gang:
+   mono ./fsharp/fslex.exe --unicode CLex.fsl
+   mono ./fsharp/fsyacc.exe --module CPar CPar.fsy
+   fsharpi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAndRun.fs
+   
+   open ParseAndRun;;
+   fromFile "ex1.c";;
+   run (fromFile "ex1.c") [17];;
+   run (fromFile "ex5.c");;
+   run (fromFile "ex11.c") [8];;
 
 B. To compile and use the micro-C compiler
 
