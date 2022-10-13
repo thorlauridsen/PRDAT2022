@@ -27,6 +27,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
    run (fromFile "ex1.c") [17];;
    run (fromFile "ex5.c");;
    run (fromFile "ex11.c") [8];;
+"   run (fromFile "7-2-1.c");;
 
 B. To compile and use the micro-C compiler
 
@@ -38,6 +39,18 @@ B. To compile and use the micro-C compiler
    compileToFile (fromFile "ex11.c") "ex11.out";;
    compile "ex11";;
    #q;;
+
+   mac gang:
+   mono ./fsharp/fslex.exe --unicode CLex.fsl
+   mono ./fsharp/fsyacc.exe --module CPar CPar.fsy
+   fsharpi -r ./fsharp/FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs   
+
+   open ParseAndComp;;
+   compileToFile (fromFile "ex11.c") "ex11.out";;
+   compile "ex11";;
+   #q;;
+
+
 
 The Java stack machine:
 
