@@ -79,16 +79,17 @@ Since we only give the function one actual argument but expects 2, it returns a 
 ![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/Ex63.png?raw=true)
 
 ## Exercise 6.4
-Unfinished: Insert images of trees
-
 ```
 let f x = 1 
 in f f end
 ```
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/tree1.jpg?raw=true)
+
 ```
 let f x = if x<10 then 42 else f(x+1)
 in f 20 end
 ```
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec05/Images/tree2.jpg?raw=true)
 
 ## Exercise 6.5
 
