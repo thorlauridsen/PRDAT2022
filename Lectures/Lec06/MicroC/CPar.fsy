@@ -14,11 +14,11 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE
+%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE FOR
 %token PLUS MINUS TIMES DIV MOD
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
-%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP
+%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP INCREMENT DECREMENT
 %token EOF
 
 %right ASSIGN             /* lowest precedence */
@@ -29,6 +29,7 @@ let nl = CstI 10
 %left GT LT GE LE
 %left PLUS MINUS
 %left TIMES DIV MOD 
+%right INCREMENT DECREMENT 
 %nonassoc NOT AMP 
 %nonassoc LBRACK          /* highest precedence  */
 
@@ -94,18 +95,24 @@ Stmt:
 ;
 
 StmtM:  /* No unbalanced if-else */
-    Expr SEMI                           { Expr($1)             }
-  | RETURN SEMI                         { Return None          }
-  | RETURN Expr SEMI                    { Return(Some($2))     }
-  | Block                               { $1                   }
-  | IF LPAR Expr RPAR StmtM ELSE StmtM  { If($3, $5, $7)       }
-  | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
+    Expr SEMI                                       { Expr($1)             }
+  | RETURN SEMI                                     { Return None          }
+  | RETURN Expr SEMI                                { Return(Some($2))     }
+  | Block                                           { $1                   }
+  | IF LPAR Expr RPAR StmtM ELSE StmtM              { If($3, $5, $7)       }
+  | WHILE LPAR Expr RPAR StmtM                      { While($3, $5)        }
+  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM    {
+        
+  
+  
+  }
 ;
 
 StmtU:
-    IF LPAR Expr RPAR StmtM ELSE StmtU  { If($3, $5, $7)       }
-  | IF LPAR Expr RPAR Stmt              { If($3, $5, Block []) }
-  | WHILE LPAR Expr RPAR StmtU          { While($3, $5)        }
+    IF LPAR Expr RPAR StmtM ELSE StmtU              { If($3, $5, $7)       }
+  | IF LPAR Expr RPAR Stmt                          { If($3, $5, Block []) }
+  | WHILE LPAR Expr RPAR StmtU                      { While($3, $5)        }
+  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU    { For($3, $5)          }
 ;
 
 Expr: 
@@ -116,6 +123,8 @@ Expr:
 ExprNotAccess:
     AtExprNotAccess                     { $1                  }
   | Access ASSIGN Expr                  { Assign($1, $3)      }
+  | INCREMENT Access                    { PreInc($2)          }
+  | DECREMENT Access                    { PreDec($2)          }
   | NAME LPAR Exprs RPAR                { Call($1, $3)        }  
   | NOT Expr                            { Prim1("!", $2)      }
   | PRINT Expr                          { Prim1("printi", $2) }

@@ -133,6 +133,9 @@ let rec exec stmt (locEnv : locEnv) (gloEnv : gloEnv) (store : store) : store =
               if v<>0 then loop (exec body locEnv gloEnv store2)
                       else store2
       loop store
+    | Forloop(e1, e2, e3, stmt1) ->
+        //Finish
+        store
     | Expr e -> 
       let (_, store1) = eval e locEnv gloEnv store 
       store1 
@@ -194,6 +197,12 @@ and eval e locEnv gloEnv store : int * store =
       let (i1, store1) as res = eval e1 locEnv gloEnv store
       if i1<>0 then res else eval e2 locEnv gloEnv store1
     | Call(f, es) -> callfun f es locEnv gloEnv store 
+    | PreInc(acc) -> 
+        //Finish       
+        (1, store)
+    | PreDec(acc) -> 
+        //Finish       
+        (1, store)
 
 and access acc locEnv gloEnv store : int * store = 
     match acc with 

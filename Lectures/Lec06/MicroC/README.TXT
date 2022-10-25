@@ -49,6 +49,10 @@ B. To compile and use the micro-C compiler
    compileToFile (fromFile "ex11.c") "ex11.out";;
    compile "ex11";;
    #q;;
+   
+   compileToFile (fromFile "7-2-1.c") "7-2-1.out";;
+   compileToFile (fromFile "7-2-2.c") "7-2-2.out";;
+   compileToFile (fromFile "7-2-3.c") "7-2-3.out";;
 
 
 
@@ -56,6 +60,7 @@ The Java stack machine:
 
    javac Machine.java
    java Machine ex11.out 8
+   java Machine 7-2-3.out
 
 The C stack machine
    gcc machine.c
