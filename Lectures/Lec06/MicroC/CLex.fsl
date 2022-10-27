@@ -53,8 +53,8 @@ rule Token = parse
                     { keyword (lexemeAsString lexbuf) }
   | '+'             { PLUS } 
   | '-'             { MINUS } 
-  | '++'            { INCREMENT } 
-  | '--'            { DECREMENT } 
+  | "++"            { INCREMENT } 
+  | "--"            { DECREMENT } 
   | '*'             { TIMES } 
   | '/'             { DIV } 
   | '%'             { MOD }                     
