@@ -16,10 +16,10 @@ void main() {
   int max; 
   max = 3;
 
-  histogram(7, arr, max, &freq);
+  histogram(7, &arr, max, &freq);
 }
 
-void histogram(int n, int ns[], int max, int *freq[]) {
+void histogram(int n, int *ns[], int max, int *freq[]) {
   int i;
   i = 0;
   while(i <= max)

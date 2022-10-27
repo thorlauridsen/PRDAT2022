@@ -14,7 +14,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
    open ParseAndRun;;
    fromFile "ex1.c";;
    run (fromFile "ex1.c") [17];;
-   run (fromFile "ex5.c");;
+   run (fromFile "ex5.c") [];;
    run (fromFile "ex11.c") [8];;
 
    mac gang:
@@ -25,9 +25,11 @@ A. Generating and compiling the lexer and parser for micro-C, and
    open ParseAndRun;;
    fromFile "ex1.c";;
    run (fromFile "ex1.c") [17];;
-   run (fromFile "ex5.c");;
+   run (fromFile "ex5.c") [];;
    run (fromFile "ex11.c") [8];;
-   run (fromFile "7-2-1.c");;
+   run (fromFile "7-2-1.c") [];;
+   
+   run (fromFile "7-5.c") [];;
 
 B. To compile and use the micro-C compiler
 
@@ -53,6 +55,8 @@ B. To compile and use the micro-C compiler
    compileToFile (fromFile "7-2-1.c") "7-2-1.out";;
    compileToFile (fromFile "7-2-2.c") "7-2-2.out";;
    compileToFile (fromFile "7-2-3.c") "7-2-3.out";;
+   compileToFile (fromFile "7-3.c") "7-3.out";;
+   compileToFile (fromFile "7-5.c") "7-5.out";;
 
 
 
