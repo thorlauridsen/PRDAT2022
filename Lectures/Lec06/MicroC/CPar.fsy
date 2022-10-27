@@ -101,18 +101,38 @@ StmtM:  /* No unbalanced if-else */
   | Block                                           { $1                   }
   | IF LPAR Expr RPAR StmtM ELSE StmtM              { If($3, $5, $7)       }
   | WHILE LPAR Expr RPAR StmtM                      { While($3, $5)        }
-  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM    {
-        
-  
-  
-  }
+  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM    { 
+    Block [
+        Stmt(Expr $3); 
+        Stmt(
+            While($5, 
+                Block [
+                    Stmt($9); 
+                    Stmt(Expr $7)
+                ]
+            )
+        )
+    ]
+    }
 ;
 
 StmtU:
     IF LPAR Expr RPAR StmtM ELSE StmtU              { If($3, $5, $7)       }
   | IF LPAR Expr RPAR Stmt                          { If($3, $5, Block []) }
   | WHILE LPAR Expr RPAR StmtU                      { While($3, $5)        }
-  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU    { For($3, $5)          }
+  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU    { 
+    Block [
+        Stmt(Expr $3); 
+        Stmt(
+            While($5, 
+                Block [
+                    Stmt($9); 
+                    Stmt(Expr $7)
+                ]
+            )
+        )
+    ]
+    }
 ;
 
 Expr: 
