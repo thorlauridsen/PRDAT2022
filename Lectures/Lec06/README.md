@@ -286,14 +286,30 @@ for (e1; e2; e3)
 { e1;
     while (e2) {
       stmt
-e3; }
+      e3; 
+    }
 }
 ```
 *Hence it suffices to let the semantic action ... in the parser construct abstract syntax using the existing Block, While, and Expr constructors from the stmt type.*
 *Rewrite your programs from Exercise 7.2 to use for-loops instead of while-loops.*
 
 ## Exercise Solution
-Unfinished
+See changes in `CPar.fsy` and `CLex.fsl`
+```
+  | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM    { 
+    Block [
+        Stmt(Expr $3); 
+        Stmt(
+            While($5, 
+                Block [
+                    Stmt($9); 
+                    Stmt(Expr $7)
+                ]
+            )
+        )
+    ]
+    }
+```
 
 # Exercise 7.4
 ## Exercise Description
