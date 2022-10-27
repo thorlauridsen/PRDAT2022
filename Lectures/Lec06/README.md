@@ -221,6 +221,8 @@ Unfinished (add images)
 
 Unfinished
 
+
+
 # Exercise 7.3
 ## Exercise Description
 *Extend MicroC with a for-loop, permitting for instance*
