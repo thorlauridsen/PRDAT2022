@@ -16,33 +16,35 @@ void main() {
   int max; 
   max = 3;
 
-  histogram(7, arr, max, freq);
+  histogram(7, arr, max, &freq);
   printarr(max, freq);
 }
 
-void histogram(int n, int ns[], int max, int freq[]) {
+void histogram(int n, int ns[], int max, int *freq[]) {
   int i;
   i = 0;
-  while(i < max)
+  while(i <= max)
   {
-    freq[i] = 0;
+    *freq[i] = 0;
+    print i;
+    print *freq[i];
     i = i + 1;
   }
-
+/*
   i = 0;
   while(i < n)
   {
-    freq[ns[i]] = freq[ns[i]] + 1;
+    *freq[ns[i]] = *freq[ns[i]] + 1;
     i = i + 1;
-  }
+  }*/
 }
 
 
 void printarr(int len, int a[]) {
   int i; 
   i = 0; 
-  while (i < len) { 
+  while (i <= len) { 
     print a[i]; 
-    i=i+1; 
+    i = i + 1; 
   } 
 }

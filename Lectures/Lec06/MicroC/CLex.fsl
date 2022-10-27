@@ -57,7 +57,7 @@ rule Token = parse
   | "--"            { DECREMENT } 
   | '*'             { TIMES } 
   | '/'             { DIV } 
-  | '%'             { MOD }                     
+  | '%'             { MOD } 
   | '='             { ASSIGN } 
   | "=="            { EQ } 
   | "!="            { NE }
