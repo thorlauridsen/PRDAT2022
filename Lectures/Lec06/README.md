@@ -296,4 +296,4 @@ void main() {
 	println;
 }
 ```
-![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec06/Images/7-5.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec06/images/7-5.png?raw=true)
