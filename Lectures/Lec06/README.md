@@ -221,8 +221,6 @@ Unfinished (add images)
 
 Unfinished
 
-
-
 # Exercise 7.3
 ## Exercise Description
 *Extend MicroC with a for-loop, permitting for instance*
@@ -263,11 +261,39 @@ Extend the micro-C abstract syntax in Absyn.fs with the preincrement and predecr
 *Modify the micro-C interpreter in Interp.fs to handle PreInc and PreDec. You will need to modify the eval function, and use the getSto and setSto store operations (Sect. 7.3).*
 
 ## Exercise Solution
-Unfinished
+
+See changes in `Absyn.fs` and `Interp.fs`
+
+`Interp.fs`:
+```
+| PreInc(acc) -> 
+	let (loc, store1) = access acc locEnv gloEnv store
+	let value = (getSto store1 loc) + 1
+	(value, setSto store1 loc value)
+| PreDec(acc) -> 
+	let (loc, store1) = access acc locEnv gloEnv store
+	let value = (getSto store1 loc) - 1
+	(value, setSto store1 loc value)
+```
 
 # Exercise 7.5
 ## Exercise Description
 *Extend the micro-C lexer and parser to accept ++e and –e also,and to build the corresponding abstract syntax.*
 
 ## Exercise Solution
-Unfinished
+
+Example of using increment and decrement.
+```
+void main() {
+    int num;
+	num = 6;
+	
+	++num;
+    print num;
+	
+	--num;
+    print num;
+	println;
+}
+```
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec06/Images/7-5.png?raw=true)
