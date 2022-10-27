@@ -183,7 +183,7 @@ void arrsum(int n, int arr[], int *sump) {
 }
 ```
 
-![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec06/images/7-2-1.png?raw=true)
+![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec06/images/7.2.1.png?raw=true)
 
 
 ### (ii) squares(int n, int arr[])
