@@ -7,5 +7,4 @@ void main() {
 	
 	--num;
     print num;
-	println;
 }
