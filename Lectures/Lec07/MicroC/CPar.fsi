@@ -40,6 +40,8 @@ type token =
   | RETURN
   | VOID
   | WHILE
+  | SWITCH
+  | CASE
   | FOR
   | CSTSTRING of (string)
   | NAME of (string)
@@ -85,6 +87,8 @@ type tokenId =
     | TOKEN_RETURN
     | TOKEN_VOID
     | TOKEN_WHILE
+    | TOKEN_SWITCH
+    | TOKEN_CASE
     | TOKEN_FOR
     | TOKEN_CSTSTRING
     | TOKEN_NAME
@@ -113,6 +117,7 @@ type nonTerminalId =
     | NONTERM_Access
     | NONTERM_Exprs
     | NONTERM_Exprs1
+    | NONTERM_CaseL
     | NONTERM_Const
     | NONTERM_Type
 /// This function maps tokens to integer indexes

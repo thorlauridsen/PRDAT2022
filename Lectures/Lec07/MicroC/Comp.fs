@@ -144,6 +144,29 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
+    | Switch (expr, cases) ->
+      let labelend = newLabel();
+      let caseLabels = List.map (fun (i, stmt) -> (i, stmt, newLabel())) cases;
+      
+      let e = cExpr expr varEnv funEnv
+      List.fold (
+        fun acc (i, stmt, label) ->
+          e
+          @ [CSTI i]
+          @ [EQ]
+          @ [IFNZRO label]
+          @ acc
+      ) [] caseLabels
+      @ List.fold (
+        fun acc (i, stmt, label) -> 
+          [Label label]
+          @ cStmt stmt varEnv funEnv
+          @ [GOTO labelend]
+          @ acc
+        ) [] caseLabels
+      @ [Label labelend]
+        
+      
 
 and cStmtOrDec stmtOrDec (varEnv : varEnv) (funEnv : funEnv) : varEnv * instr list = 
     match stmtOrDec with 

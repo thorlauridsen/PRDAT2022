@@ -25,7 +25,7 @@ and expr =
   | Call of string * expr list       (* Function call f(...)        *)
   | PreInc of access                 (* C/C++/Java/C# ++i or ++a[e] *)
   | PreDec of access                 (* C/C++/Java/C# --i or --a[e] *)
-  | ShortIf of expr * expr * expr    (* Conditional e1 ? e2 : e3     *)
+  | ShortIf of expr * expr * expr    (* Conditional e1 ? e2 : e3    *)
 
 and access =                                                       
   | AccVar of string                 (* Variable access        x    *) 
@@ -39,6 +39,7 @@ and stmt =
   | Return of expr option                      (* Return from method           *)
   | Block of stmtordec list                    (* Block: grouping and scope    *)
   | Forloop of expr * expr * expr * stmt       (* For loop                     *)
+  | Switch of expr * (int * stmt) list                 (* Switch statement             *)
 
 and stmtordec =                                                    
   | Dec of typ * string              (* Local variable declaration  *)

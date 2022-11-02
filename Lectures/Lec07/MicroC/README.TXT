@@ -57,6 +57,7 @@ B. To compile and use the micro-C compiler
    compileToFile (fromFile "7-3.c") "7-3.out";;
    compileToFile (fromFile "7-5.c") "7-5.out";;
    compileToFile (fromFile "8-5.c") "8-5.out";;
+   compileToFile (fromFile "8-6.c") "8-6.out";;
 
 
 
