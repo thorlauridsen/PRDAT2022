@@ -312,7 +312,10 @@ which prints 7 6 which is the correct answer
 
 ### Description
 
-Description
+Compile ex8.c and study the symbolic bytecode to see why it is so much slower than the handwritten 20 million iterations loop in prog1.
+Compile ex13.c and study the symbolic bytecode to see how loops and condi- tionals interact; describe what you see.
+In a later chapter we shall see an improved micro-C compiler that generates fewer extraneous labels and jumps.
+
 
 ### Solution
 
@@ -322,7 +325,8 @@ Unfinished
 
 ### Description
 
-Description
+Extend the micro-C language, the abstract syntax, the lexer, the parser, and the compiler to implement conditional expressions of the form (e1 ? e2 : e3).
+The compilation of e1 ? e2 : e3 should produce code that evaluates e2 only if e1 is true and evaluates e3 only if e1 is false. The compilation scheme should be the same as for the conditional statement if (e1) e2 else e3, but expression e2 or expression e3 must leave its value on the stack top if evaluated, so that the entire expression e1 ? e2 : e3 leaves its value on the stack top.
 
 ### Solution
 
@@ -332,7 +336,18 @@ Unfinished
 
 ### Description
 
-Description
+Extend the lexer, parser, abstract syntax and compiler to implement switch statements such as this one:
+```c
+switch (month) {
+  case 1:
+    { days = 31; }
+  case 2:
+References 153
+    { days = 28; if (y%4==0) days = 29; }
+  case 3:
+{ days = 31; } }
+```
+Unlike in C, there should be no fall-through from one case to the next: after the last statement of a case, the code should jump to the end of the switch statement. The parenthesis after switch must contain an expression. The value after a case must be an integer constant, and a case must be followed by a statement block. A switch with n cases can be compiled using n labels, the last of which is at the very end of the switch. For simplicity, do not implement the break statement or the default branch.
 
 ### Solution
 
