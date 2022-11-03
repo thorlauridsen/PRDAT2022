@@ -426,18 +426,18 @@ This is compiled in `Comp.fs`
 
 We test it with
 ```c
-void main(int month) {
+void main(int month, int year) {
     int days;
     switch (month) {
         case 1:
             { days = 31; }
         case 2:
-            { days = 28; }
+            { days = (year%4==0 ? 29 : 28); }
         case 3:
             { days = 31; } 
     }
     print days;
 }
 ```
-Which should print 31 if month is 1 or 3 and 28 if month is 2
-![](images/8.6.png)
+Which should print 31 if month is 1 or 3 and 28 if month is 2, unless year can be divided fully by 4, in which case it is 29.
+![](images/8.6new.png)
