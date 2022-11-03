@@ -74,7 +74,7 @@ L3:
     INCSP -1
     RET 0
 ```
-```
+```bash
 > compileToFile (fromFile "ex5.c") "ex5.out";;
 val it: Machine.instr list =
   [LDARGS; CALL (1, "L1"); STOP; Label "L1"; INCSP 1; GETBP; CSTI 1; ADD;
@@ -330,7 +330,42 @@ The compilation of e1 ? e2 : e3 should produce code that evaluates e2 only if e1
 
 ### Solution
 
-Unfinished
+First we start in `CPar.fsy` and add tokens `QUESTIONMARK` and `COLON` 
+```f#
+%token CHAR ELSE IF QUESTIONMARK COLON INT NULL PRINT PRINTLN RETURN VOID WHILE FOR
+```
+and we also add an case for the ShortIf (ternary) expression in the expr match statement
+```f#
+| LPAR Expr QUESTIONMARK Expr COLON Expr RPAR { ShortIf($2, $4, $6) }
+```
+afterwards we move to `CLex.fsl` and add tokens for `?` and `:`
+```f#
+| '?'             { QUESTIONMARK }
+| ':'             { COLON }
+```
+Lastly we add to `Comp.fs` code to compile the ShortIf
+```f#
+| ShortIf (e, expr1, expr2) -> 
+      let labelse = newLabel()
+      let labend  = newLabel()
+      cExpr e varEnv funEnv @ [IFZERO labelse] 
+      @ cExpr expr1 varEnv funEnv @ [GOTO labend]
+      @ [Label labelse] @ cExpr expr2 varEnv funEnv
+      @ [Label labend]
+```
+We can test it with the following code:
+```c
+void main() {
+    int num;
+    print (1 < 2 ? 2 : 3);
+    num = (true ? (5) : (6));
+    print num;
+	num = (false ? 5 : 6);
+    print num;
+}
+```
+Which should print `2 5 6` 
+![](images/8.5.png)
 
 ## Exercise 8.6
 
@@ -351,4 +386,58 @@ Unlike in C, there should be no fall-through from one case to the next: after th
 
 ### Solution
 
-Unfinished
+To implement the switch statement then we start in `CLex.fsl` and add the strings `switch` and `case` and match them to `SWITCH` and `CASE`. Afterwards we add SWITCH and CASE to the tokens in `CPar.fsy`. In the same file we add to the StmtM match case
+```f#
+StmtM
+| SWITCH LPAR Expr RPAR LBRACE CaseL RBRACE { Switch($3, $6) }
+```
+
+and add an `CaseL` match case
+```f#
+CaseL:
+    CASE CSTINT COLON Stmt               { [($2, $4)]}
+  | CASE CSTINT COLON Stmt CaseL         { ($2, $4) :: $5}
+```
+
+This is compiled in `Comp.fs`
+```f#
+| Switch (expr, cases) ->
+      let labelend = newLabel();
+      let caseLabels = List.map (fun (i, stmt) -> (i, stmt, newLabel())) cases;
+
+      let e = cExpr expr varEnv funEnv
+      List.fold (
+        fun acc (i, stmt, label) ->
+          e
+          @ [CSTI i]
+          @ [EQ]
+          @ [IFNZRO label]
+          @ acc
+      ) [] caseLabels
+      @ List.fold (
+        fun acc (i, stmt, label) -> 
+          [Label label]
+          @ cStmt stmt varEnv funEnv
+          @ [GOTO labelend]
+          @ acc
+        ) [] caseLabels
+      @ [Label labelend]
+```
+
+We test it with
+```c
+void main(int month) {
+    int days;
+    switch (month) {
+        case 1:
+            { days = 31; }
+        case 2:
+            { days = 28; }
+        case 3:
+            { days = 31; } 
+    }
+    print days;
+}
+```
+Which should print 31 if month is 1 or 3 and 28 if month is 2
+![](images/8.6.png)
