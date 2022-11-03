@@ -316,7 +316,7 @@ void main() {
 }
 ```
 which prints 7 6 which is the correct answer
-![](https://github.com/REXKrash/PRDAT2022/blob/main/Lectures/Lec07/images/8.3.png?raw=true)
+![](images/8.3.png)
 
 ## Exercise 8.4
 
