@@ -84,7 +84,7 @@ C. To compile and use the backwards (continuation-based) micro-C compiler:
    #q;;
 
    javac Machine.java
-   java Machine 7-2-3.out 8
+   java Machine 8-3.out 2 2001
 
 
 D. Build the backwards micro-C compiler as a command-line program microcc
