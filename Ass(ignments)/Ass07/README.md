@@ -9,7 +9,9 @@ As a warm-up, compile one of the micro-C examples provided, such as that in sour
 
 #### Solution
 Running `java Machine ex11.out 8`
+
 ![](images/8.1.png)
+
 *(Full output could not be in picture but there was 92 lines)*
 
 ### (ii)
