@@ -51,6 +51,17 @@ For this exercise we have to find an issue in the `QueueWithMistake.java"
 #### Solution
 
 The solution can be found in `Ass(ignments)/Ass08/9_3/QueueWithMistake.java`
+The main problem was identified in the SentinelLockQueue.get() method, which was previously
+```
+public synchronized int get() {
+    if (head.next == null) 
+        return -999;
+    Node first = head;
+    head = first.next;
+    return head.item;
+}
+```   
+We have however modified it to be:
 ```
 public synchronized int get() {
     if (head.next == null)
@@ -61,3 +72,4 @@ public synchronized int get() {
     return head.item; //Return new head.item
 }
 ```
+
