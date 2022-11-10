@@ -473,12 +473,31 @@ void initheap() {
 
 void markPhase(word s[], word sp) {
   printf("marking ...\n");
-  // TODO: Actually mark something
+  // TODO: Actually mark 
+  for (i = 0; i < sp; i++) {
+    if (s[i] != 0) {
+        mark(s[i])
+    }
+  }
+}
+
+void mark(word* block) {
+    printf("marking2 ...\n");
+    printf(&block[0])
+    
+    
+    //What color does header have?
+    //the block is just header, car, cdr
+    //if it is white, color it black
+    //check if car and cdr is a pointer
+    //call mark if car and cdr is pointer
 }
 
 void sweepPhase() {
   printf("sweeping ...\n");
   // TODO: Actually sweep
+  //the header of a word says the length of the word
+  //this is used to jump to the next word
 }
 
 void collect(word s[], word sp) {
