@@ -471,26 +471,47 @@ void initheap() {
   freelist = &heap[0];
 }
 
-void markPhase(word s[], word sp) {
-  printf("marking ...\n");
-  // TODO: Actually mark 
-  for (i = 0; i < sp; i++) {
-    if (s[i] != 0) {
-        mark(s[i])
-    }
-  }
-}
-
 void mark(word* block) {
-    printf("marking2 ...\n");
-    printf(&block[0])
-    
-    
+    printf("marking3 ...\n");
+
+    if (inHeap((word*)block[1])) {
+        printf("in heap\n");
+    } else {
+        printf("not in heap\n");
+    }
+
+    printf("after\n");
+
+
     //What color does header have?
     //the block is just header, car, cdr
     //if it is white, color it black
     //check if car and cdr is a pointer
     //call mark if car and cdr is pointer
+}
+
+void markPhase(word s[], word sp) {
+  printf("marking ...\n");
+  // TODO: Actually mark 
+
+  int i;
+  for (i = 0; i <= sp; i++) {
+      if (inHeap((word*)s[i])) {
+          Color(((word*)s[i])[-1]) - Grey;
+      }
+  }
+  printf("bbb\n");
+
+
+  int j;
+  for (j = 0; j < s.length; j++) {
+      word* p = (word*)s[j];
+      if (inHeap(p)) {
+          mark(p);
+      }
+  }
+  printf("ccc\n");
+
 }
 
 void sweepPhase() {
