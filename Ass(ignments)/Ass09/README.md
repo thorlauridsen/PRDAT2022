@@ -23,11 +23,19 @@ ttttttttnnnnnnnnnnnnnnnnnnnnnngg,
 
 that is, a 32-bit word, as described in the source code comments.
 
+tttttttt is the block tagging
+nnnnnnnnnnnnnnnnnnnnnn is the block length
+gg is the garbage collection color
+
 ### (iii)
-When does the abstract machine, or more precisely, its instruction interpretation loop, call the allocate(...) function? Is there any other interaction between the abstract machine (also called the mutator) and the garbage collector?
+When does the abstract machine, or more precisely, its instruction interpretation loop, call the `allocate(...)` function? Is there any other interaction between the abstract machine (also called the mutator) and the garbage collector?
+
+`allocate(...)` is only used in `CSTI i` which pushes the integer constant i
+The other garbage collection methods aren't used in the instruction interpretation loop.
 
 ### (iv)
-In what situation will the garbage collector’s collect(...) function be called?
+In what situation will the garbage collector’s `collect(...)` function be called?
+When allocating memory, the `collect()` method will be called if there is no available memory.
 
 ## Exercise 10.2
 Add a simple mark-sweep garbage collector to listmachine.c, like
