@@ -38,26 +38,26 @@ void collect(int s[], int sp) {
   sweepPhase();
 }
 ```
-Your markPhase function should scan the abstract machine stack s[0..sp] and
-call an auxiliary function mark(word* block) on each non-nil heap reference
-in the stack, to mark live blocks in the heap. Function mark(word* block)
+Your `markPhase` function should scan the abstract machine stack `s[0..sp]` and
+call an auxiliary function `mark(word* block)` on each non-nil heap reference
+in the stack, to mark live blocks in the heap. Function `mark(word* block)`
 should recursively mark everything reachable from the block.
-The sweepPhase function should scan the entire heap, put white blocks on the
+The `sweepPhase` function should scan the entire heap, put white blocks on the
 freelist, and paint black blocks white. It should ignore blue blocks; they are either
 already on the freelist or they are orphan blocks which are neither used for data nor
 on the freelist, because they consist only of a block header, so there is no way to
 link them into the freelist.
 This may sound complicated, but the complete solution takes less than 30 lines
 of C code.
-Running listmachine ex30.out 1000 should now work, also for arguments that are much larger than 1000.
-Remember that the listmachine has a tracing mode listmachine -trace
-ex30.out 4 so you can see the stack state just before your garbage collector
+Running `listmachine ex30.out 1000` should now work, also for arguments that are much larger than 1000.
+Remember that the listmachine has a tracing mode `listmachine -trace
+ex30.out 4` so you can see the stack state just before your garbage collector
 crashes.
-Also, calling the heapStatistics() function in listmachine.c performs some checking of the heap’s consistency and reports some statistics on the
+Also, calling the `heapStatistics()` function in `listmachine.c` performs some checking of the heap’s consistency and reports some statistics on the
 number of used and free blocks and so on. It may be informative to call it before
 and after garbage collection, and between the mark and sweep phases.
-When your garbage collector works, use it to run the list-C programs ex35.lc
-and ex36.lc and check that they produce the expected output (described in their
+When your garbage collector works, use it to run the list-C programs `ex35.lc`
+and `ex36.lc` and check that they produce the expected output (described in their
 source files). These programs build shared and cyclic data structures in the heap,
 and this may reveal flaws in your garbage collector
 
