@@ -10,7 +10,7 @@ A. Loading two continuation-based interpreters for a functional
 
    open Contfun;;
    eval1 ex1 [];; 
-   eval1 ex2 [("n", Int 10)];
+   eval1 ex2 [("n", Int 10)];;
    #q;;
 
 

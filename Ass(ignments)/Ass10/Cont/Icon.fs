@@ -35,6 +35,7 @@ type expr =
   | Or  of expr * expr
   | Seq of expr * expr
   | Every of expr 
+  | Prim1 of string * expr
   | Fail;;
 
 (* Runtime values and runtime continuations *)
@@ -112,7 +113,7 @@ let ex1 = Seq(Write (FromTo(1, 3)), Fail);
 let ex2 = And(Write (FromTo(1, 3)), Fail);
 
 // (write((1 to 3) & (4 to 6))) & fail
-let ex3and = And(Write(And(FromTo(1, 3), FromTo(4, 6))), Fail);
+let ex3and = And(Write(And(FromTo(1, 2), FromTo(4, 6))), Fail);
 
 // (write((1 to 3) | (4 to 6))) & fail
 let ex3or  = And(Write(Or(FromTo(1, 3), FromTo(4, 6))), Fail);
@@ -135,5 +136,8 @@ let ex7 = Every(Write(Prim("+", FromTo(1,3), FromTo(4, 6))));
 // write(4 < (1 to 10))
 let ex8 = Write(Prim("<", CstI 4, FromTo(1, 10)));
 
+
+
 // every(write(4 < (1 to 10)))
 let ex9 = Every(Write(Prim("<", CstI 4, FromTo(1, 10))));
+

@@ -73,10 +73,27 @@ The micro-Icon expression `2 * ( 1 to 4 )` succeeds four times, with the values 
   open Icon;;
   run (Every(Write(Prim("*", CstI 2, FromTo(1, 4)))));;
 ```
-using the interpreter in `Icon.fs` and using abstract syntax instead of the concrete syntax `(2 * (1 to 4))`. We must use abstract syntax because we have not writ- ten lexer and parser specification for micro-Icon. A number of examples in abstract syntax are given at the end of the `Icon.fs` source file.
+using the interpreter in `Icon.fs` and using abstract syntax instead of the concrete syntax `(2 * (1 to 4))`. We must use abstract syntax because we have not written lexer and parser specification for micro-Icon. A number of examples in abstract syntax are given at the end of the `Icon.fs` source file.
+
+```
+open Icon;;
+// 3 5 7 9
+run (Every(Write(Prim("+", CstI 1 ,Prim("*", CstI 2, FromTo(1, 4))))));;
+// 21 22 31 32 41 42
+run (Every(Write(Prim("+", Prim("*", CstI 10, FromTo(2, 4)), FromTo(1, 2)))));;
+```
+
 
 ### (i) 
 Write an expression that produces and prints the values `3 5 7 9`. Write an expression that produces and prints the values `21 22 31 32 41 42`.
+
+```
+open Icon;;
+// 3 5 7 9
+run (Every(Write(Prim("+", CstI 1 ,Prim("*", CstI 2, FromTo(1, 4))))));;
+// 21 22 31 32 41 42
+run (Every(Write(Prim("+", Prim("*", CstI 10, FromTo(2, 4)), FromTo(1, 2)))));;
+```
 
 
 ### (ii)
@@ -84,7 +101,11 @@ The micro-Icon language (like real Icon) has no boolean values. Instead, failure
 Similarly, thanks to backtracking, `3 < (1 to 5)` succeeds twice, giving the values 4 and 5. 
 Use this to write an expression that prints the least multiple of 7 that is greater than 50.
 
-
+```
+open Icon;;
+// the least multiple of 7 that is greater than 50 (56)
+run (Write(Prim("<", CstI 50, Prim("*", CstI 7, FromTo(1,10)))));;
+```
 
 ### (iii) 
 Extend the abstract syntax with unary (one-argument) primitive functions, like this:
