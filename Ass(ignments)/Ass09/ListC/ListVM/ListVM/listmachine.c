@@ -472,53 +472,87 @@ void initheap() {
 }
 
 void mark(word* block) {
-    printf("marking3 ...\n");
+    printf("marking ...\n");
 
-    if (inHeap((word*)block[1])) {
-        printf("in heap\n");
-    } else {
-        printf("not in heap\n");
+    //If the block color is white, paint it black.
+    if (Color(block[0]) == White)
+    {
+        block[0] = Paint(block[0], Black);
+
+        //Check if car and cdr is a pointer
+        //Call mark if car and cdr is pointer
+        if (BlockTag(block[0]) == CONSTAG)
+        {
+            
+            if (block[1] != 0 && !IsInt(block[1]))
+            {
+                mark((word*) block[1]);
+            }
+
+            if (block[2] != 0 && !IsInt(block[2]))
+            {
+                mark((word*) block[2]);
+            }
+        }
     }
-
-    printf("after\n");
-
-
-    //What color does header have?
-    //the block is just header, car, cdr
-    //if it is white, color it black
-    //check if car and cdr is a pointer
-    //call mark if car and cdr is pointer
 }
 
+//Go through each non-nil heap reference in the stack and mark it
 void markPhase(word s[], word sp) {
-  printf("marking ...\n");
-  // TODO: Actually mark 
-
-  int i;
-  for (i = 0; i <= sp; i++) {
-      if (inHeap((word*)s[i])) {
-          Color(((word*)s[i])[-1]) - Grey;
-      }
-  }
-  printf("bbb\n");
-
-
-  int j;
-  for (j = 0; j < s.length; j++) {
-      word* p = (word*)s[j];
-      if (inHeap(p)) {
+  printf("mark phase starting...\n");
+  
+  //The mark phase goes through the entire heap to find all references.
+  //When we encounter a heap reference to a white block, it is painted blackand 
+  //we recursively mark the block’s words. After the mark phase, every block in 
+  //the heap is either black because it is reachable, white because it isn’t 
+  //reachable or blue because it is in the free list.
+  for (int i = 0; i <= sp; i++) 
+  {
+      if (s[i] != 0 && !IsInt(s[i]))
+      {
+          word* p = (word*)s[i];
           mark(p);
       }
   }
-  printf("ccc\n");
-
 }
 
 void sweepPhase() {
-  printf("sweeping ...\n");
-  // TODO: Actually sweep
-  //the header of a word says the length of the word
-  //this is used to jump to the next word
+  printf("sweep phase starting ...\n");
+  
+  //Sweep phase visits all blocks in the heap.
+  //After the sweep phase, the freelist contains all (and only) blocks that are
+  //not reachable from the stack. Moreover, all blocks in the heap are white, 
+  //except those on the freelist, which are blue.
+  
+  word* heaper = heap;
+
+  while (heaper < afterHeap) {
+      word header = *heaper;
+      int color = Color(header);
+
+      switch (color) 
+      {
+          case Black:
+
+              //If a block is black: reset color to white.
+              heaper[0] = Paint(header, White);
+              break;
+
+          case White:
+
+              //If a block is white: it is painted blue and added to the freelist
+              heaper[0] = Paint(header, Blue);
+              heaper[1] = (word)freelist;
+              freelist = heaper;
+              break;
+
+          case Blue:
+
+              //If a block is blue: skip
+              break;
+      }
+      heaper += Length(header) + 1;
+  }
 }
 
 void collect(word s[], word sp) {
