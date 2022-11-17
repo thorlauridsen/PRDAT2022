@@ -6,10 +6,10 @@ The main goal of these exercises is to master the somewhat mind-bending notion o
 ### (i)
 Write a continuation-passing (CPS) version `lenc : ’a list ->(int ->’b) ->’b` of the list length function `len`:
 ```
-  let rec len xs =
-      match xs with
-|[] ->0
-| x::xr -> 1 + len xr;;
+let rec len xs =
+	match xs with
+	| []	-> 0
+	| x::xr	-> 1 + len xr;;
 ```
 
 Try calling the resulting function with `lenc [2; 5; 7] id`, where the initial continuation `let id = fun v -> v` is the identity function, and with `lenc [2; 5; 7] (printf "The answer is ’% d’ \n")`, where the initial continuation consumes the result and prints it.
