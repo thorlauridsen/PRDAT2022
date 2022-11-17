@@ -127,10 +127,14 @@ word* readfile(char* filename);
   #define IsInt(v) (((v)&1)==1)
   #define Tag(v) (((v)<<1)|1)
   #define Untag(v) ((v)>>1)
+  #define IsNull(v) (v==0)
+  #define IsReference(v) (((!v)&3)==3)
 #elif defined(ENV64)
   #define IsInt(v) (((v)&1)==1)
   #define Tag(v) (((v)<<1)|1)
   #define Untag(v) ((v)>>1)
+  #define IsNull(v) (v==0)
+  #define IsReference(v) (((!v)&3)==3)
 #endif
 
 #define White 0
@@ -475,7 +479,7 @@ void mark(word* block) {
     printf("marking ...\n");
 
     //If the block color is white, paint it black.
-    if (Color(block[0]) == White)
+    if (Color(block[0]) == Grey)
     {
         block[0] = Paint(block[0], Black);
 
@@ -484,12 +488,13 @@ void mark(word* block) {
         if (BlockTag(block[0]) == CONSTAG)
         {
             
-            if (block[1] != 0 && !IsInt(block[1]))
+            if (!IsNull(block[1]) && IsReference(block[1]))
+            
             {
                 mark((word*) block[1]);
             }
 
-            if (block[2] != 0 && !IsInt(block[2]))
+            if (!IsNull(block[2]) && IsReference(block[2]))
             {
                 mark((word*) block[2]);
             }
@@ -498,22 +503,32 @@ void mark(word* block) {
 }
 
 //Go through each non-nil heap reference in the stack and mark it
+// Your markPhase function should scan the abstract machine stack s[0..sp] and 
+// call an auxiliary function mark(word* block) on each non-nil heap reference in the stack, 
+// to mark live blocks in the heap.
 void markPhase(word s[], word sp) {
   printf("mark phase starting...\n");
   
   //The mark phase goes through the entire heap to find all references.
   //When we encounter a heap reference to a white block, it is painted blackand 
-  //we recursively mark the block’s words. After the mark phase, every block in 
-  //the heap is either black because it is reachable, white because it isn’t 
+  //we recursively mark the blockï¿½s words. After the mark phase, every block in 
+  //the heap is either black because it is reachable, white because it isnï¿½t 
   //reachable or blue because it is in the free list.
-  for (int i = 0; i <= sp; i++) 
-  {
-      if (s[i] != 0 && !IsInt(s[i]))
-      {
+   int i;
+
+    for (i = 0; i <= sp; i++) {
+        if (!IsNull(s[i]) && IsReference(s[i])) {
+          word* p = (word*)s[i];
+          p[0] = Paint(p[0], Grey);
+        }
+    }
+
+    for (i = 0; i <= sp; i++) {
+        if (!IsNull(s[i]) && IsReference(s[i])) {
           word* p = (word*)s[i];
           mark(p);
-      }
-  }
+        }
+    }
 }
 
 void sweepPhase() {
@@ -551,7 +566,7 @@ void sweepPhase() {
               //If a block is blue: skip
               break;
       }
-      heaper += Length(header) + 1;
+      heaper += 1 + Length(header);
   }
 }
 
