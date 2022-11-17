@@ -76,3 +76,14 @@ let rec prodc xs cont =
 
 prodc [1;2;3;4] id
 
+//11.4
+let rec prodi xs acc =
+    match xs with
+    | [] -> acc
+    | x::xr -> 
+        if x <> 0 then
+            prodi xr (acc * x)
+        else    
+            0
+
+prodi [1;2;3;4] 1
