@@ -100,7 +100,11 @@ let rec eval (e : expr) (cont : cont) (econt : econt) =
                 else
                     econt1 ()
             | ("multiples", Int i1) ->
-                fail
+                let rec multi num =
+                    cont (Int (i1 + num)) (fun () -> 
+                        multi (i1 + num)
+                    )
+                multi i1
             )
             econt
     | And(e1, e2) -> 
