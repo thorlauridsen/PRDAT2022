@@ -22,6 +22,8 @@ lenc [2; 5; 7] id
 lenc [2; 5; 7] (printf "The answer is %d \n")
 ;;
 
+lenc [2; 5; 7] (fun v -> 2*v);;
+
 //11.1.ii
 
 let rec lenc2 xs cont =
@@ -70,14 +72,8 @@ revc [1;2;3] id
 ;;
 
 //11.2.ii
-let rec revc2 xs cont =
-    match xs with
-    | []    -> cont []
-    | x::xr -> revc2 xr (fun v -> cont(v @ v))
-
-revc2 [1;2;3] id
-;;
-//It fails??... []@[] fails
+revc [1;2;3] (fun v -> v @ v);;
+//3 2 1 3 2 1
 
 
 //11.2.iii (with accumulator)
