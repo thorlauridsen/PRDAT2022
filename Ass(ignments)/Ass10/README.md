@@ -173,7 +173,7 @@ Use this to write an expression that prints the least multiple of 7 that is grea
 ```
 open Icon;;
 // the least multiple of 7 that is greater than 50 (56)
-run (Write(Prim("<", CstI 50, Prim("*", CstI 7, FromTo(1,10)))));;
+run (Every(Write(Prim("<", CstI 50, Prim("*", CstI 7, FromTo(1, 8))))));;
 ```
 
 ### (iii) 
@@ -187,11 +187,37 @@ type expr =
 Extend the interpreter `eval` to handle such unary primitives, and define two such primitives: 
 #### (a) 
 define a primitive sqr that computes the square `x · x` of its argument `x`; 
-
+```
+run (Every(Write(Prim1("sqr", CstI 5))));;
+run (Every(Write(Prim1("sqr", FromTo(3, 6)))));;
+```
+```f#
+| Prim1(ope, e1) ->
+eval e1 (fun v1 -> fun econt1 ->
+    match (ope, v1) with
+    | ("sqr", Int i1) ->
+	cont (Int(i1*i1)) econt1
+    econt
+```
 
 #### (b) 
 define a primitive even that fails if its argument is odd, and succeeds if it is even (producing the argument as result). For instance, `square(3 to 6)` should succeed four times, with the results `9, 16, 25, 36`, and `even(1 to 7)` should succeed three times with the results `2, 4, 6`.
-
+```
+run (Every(Write(Prim1("even", FromTo(1, 7)))));;
+```
+```f#
+| Prim1(ope, e1) ->
+eval e1 (fun v1 -> fun econt1 ->
+    match (ope, v1) with
+    | ("sqr", Int i1) ->
+	cont (Int(i1*i1)) econt1
+    | ("even", Int i1) ->
+	if i1 % 2 = 0 then
+	    cont (Int i1) econt1
+	else
+	    econt1 ()
+    econt
+```
 
 
 ### (iv) 
