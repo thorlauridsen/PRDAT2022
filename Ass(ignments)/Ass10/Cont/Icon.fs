@@ -89,6 +89,20 @@ let rec eval (e : expr) (cont : cont) (econt : econt) =
               | _ -> Str "unknown prim2")
               econt1)
           econt
+    | Prim1(ope, e1) ->
+        eval e1 (fun v1 -> fun econt1 ->
+            match (ope, v1) with
+            | ("sqr", Int i1) ->
+                cont (Int(i1*i1)) econt1
+            | ("even", Int i1) ->
+                if i1 % 2 = 0 then
+                    cont (Int i1) econt1
+                else
+                    econt1 ()
+            | ("multiples", Int i1) ->
+                fail
+            )
+            econt
     | And(e1, e2) -> 
       eval e1 (fun _ -> fun econt1 -> eval e2 cont econt1) econt
     | Or(e1, e2) -> 
