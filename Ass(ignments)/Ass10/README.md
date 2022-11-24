@@ -223,4 +223,26 @@ eval e1 (fun v1 -> fun econt1 ->
 ### (iv) 
 Define a unary primitive multiples that succeeds infinitely many times, producing all multiples of its argument. For instance, `multiples(3)` should produce `3, 6, 9, ...`. 
 Note that `multiples(3 to 4)` would produce multiples of 3 forever, and would never backtrack to the subexpression `(3 to 4)` to begin producing multiples of 4.
-
+```
+run (Every(Write(Prim1("multiples", CstI 5))));;
+```
+```f#
+| Prim1(ope, e1) ->
+eval e1 (fun v1 -> fun econt1 ->
+    match (ope, v1) with
+    | ("sqr", Int i1) ->
+	cont (Int(i1*i1)) econt1
+    | ("even", Int i1) ->
+	if i1 % 2 = 0 then
+	    cont (Int i1) econt1
+	else
+	    econt1 ()
+    | ("multiples", Int i1) ->
+	let rec multi num =
+	    cont (Int (i1 + num)) (fun () -> 
+		multi (i1 + num)
+	    )
+	multi i1
+    )
+    econt
+```
