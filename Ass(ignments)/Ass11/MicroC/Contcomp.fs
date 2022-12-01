@@ -40,6 +40,11 @@ let rec addIFZERO lab3 C : instr list =
     | GOTO lab :: Label lab2 :: C1 when lab2 = lab3 -> IFNZRO lab :: Label lab2 :: C1
     | _ -> IFZERO lab3 :: C
 
+let rec addIFNZERO lab3 C : instr list =
+    match C with
+    | GOTO lab :: Label lab2 :: C1 when lab2 = lab3 -> IFZERO lab :: Label lab2 :: C1
+    | _ -> IFNZRO lab3 :: C
+
 let rec addINCSP m1 C : instr list =
     match C with
     | INCSP m2            :: C1 -> addINCSP (m1+m2) C1
@@ -78,7 +83,7 @@ let rec deadcode C = (* Remove all code until next label *)
 let addNOT C =
     match C with
     | NOT        :: C1 -> C1
-    | IFZERO lab :: C1 -> IFNZRO lab :: C1 
+    | IFZERO lab :: C1 -> addIFNZERO lab C1 
     | IFNZRO lab :: C1 -> addIFZERO lab C1 
     | _                -> NOT :: C
 
@@ -107,8 +112,7 @@ let rec addCST i C =
     | (_, IFZERO lab :: C1) -> C1
     | (0, IFNZRO lab :: C1) -> C1
     | (_, IFNZRO lab :: C1) -> addGOTO lab C1
-    | (i1, LT :: Cst i2 :: C1) -> if i1 < i2 then addCST 1 C1 else addCST 0 C1   
-    | (i1, LT :: Cst i2 :: C1) -> if i1 < i2 then addCST 1 C1 else addCST 0 C1   
+    | (i1, LT :: CSTI i2 :: C1) -> if i1 < i2 then addCST 1 C1 else addCST 0 C1
     | _                     -> CSTI i :: C
             
 (* ------------------------------------------------------------------- *)
@@ -199,7 +203,7 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) (C : instr list) : instr 
     | While(e, body) ->
       let labbegin = newLabel()
       let (jumptest, C1) = 
-           makeJump (cExpr e varEnv funEnv (IFNZRO labbegin :: C))
+           makeJump (cExpr e varEnv funEnv (addIFNZERO labbegin C))
       addJump jumptest (Label labbegin :: cStmt body varEnv funEnv C1)
     | Expr e -> 
       cExpr e varEnv funEnv (addINCSP -1 C) (* Remove result of expression from stack, as this is a statement *)
@@ -282,7 +286,7 @@ and cExpr (e : expr) (varEnv : varEnv) (funEnv : funEnv) (C : instr list) : inst
       | IFNZRO labthen :: C1 -> 
         let (labelse, C2) = addLabel C1
         cExpr e1 varEnv funEnv
-           (addIFZERO labelse (cExpr e2 varEnv funEnv (IFNZRO labthen :: C2)))
+           (addIFZERO labelse (cExpr e2 varEnv funEnv (addIFNZERO labthen C2)))
       | _ ->
         let (jumpend,  C1) = makeJump C
         let (labfalse, C2) = addLabel (addCST 0 C1)
@@ -292,20 +296,16 @@ and cExpr (e : expr) (varEnv : varEnv) (funEnv : funEnv) (C : instr list) : inst
     | Orelse(e1, e2) -> 
       match C with
       | IFNZRO lab :: _ -> 
-        cExpr e1 varEnv funEnv (IFNZRO lab :: cExpr e2 varEnv funEnv C)
+        cExpr e1 varEnv funEnv (addIFNZERO lab (cExpr e2 varEnv funEnv C))
       | IFZERO labthen :: C1 ->
         let(labelse, C2) = addLabel C1
         cExpr e1 varEnv funEnv
-           (IFNZRO labelse :: cExpr e2 varEnv funEnv
-             (
-
- labthen C2))
+           (addIFNZERO labelse (cExpr e2 varEnv funEnv (addIFZERO labthen C2)))
       | _ ->
         let (jumpend, C1) = makeJump C
         let (labtrue, C2) = addLabel(addCST 1 C1)
         cExpr e1 varEnv funEnv
-           (IFNZRO labtrue 
-             :: cExpr e2 varEnv funEnv (addJump jumpend C2))
+           (addIFNZERO labtrue (cExpr e2 varEnv funEnv (addJump jumpend C2)))
     | Call(f, es) -> callfun f es varEnv funEnv C
 
 (* Generate code to access variable, dereference pointer or index array: *)
