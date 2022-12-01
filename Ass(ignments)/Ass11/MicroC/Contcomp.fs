@@ -104,6 +104,12 @@ let rec addCST i C =
     | (0, NOT        :: C1) -> addCST 1 C1
     | (_, NOT        :: C1) -> addCST 0 C1
     | (1, MUL        :: C1) -> C1
+    | (i1, CSTI i2 :: EQ :: C1)                -> addCST (if i1 = i2 then 1 else 0) C1
+    | (i1, CSTI i2 :: EQ :: NOT :: C1)         -> addCST (if i1 <> i2 then 1 else 0) C1
+    | (i1, CSTI i2 :: LT :: C1)                -> addCST (if i1 < i2 then 1 else 0) C1
+    | (i1, CSTI i2 :: LT :: NOT :: C1)         -> addCST (if i1 >= i2 then 1 else 0) C1
+    | (i1, CSTI i2 :: SWAP :: LT :: C1)        -> addCST (if i1 > i2 then 1 else 0) C1
+    | (i1, CSTI i2 :: SWAP :: LT :: NOT :: C1) -> addCST (if i1 <= i2 then 1 else 0) C1
     | (1, DIV        :: C1) -> C1
     | (0, EQ         :: C1) -> addNOT C1
     | (_, INCSP m    :: C1) -> if m < 0 then addINCSP (m+1) C1
